@@ -7,8 +7,8 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'admin_menu', 'genesis_add_inpost_seo_box' );
@@ -18,17 +18,20 @@ add_action( 'admin_menu', 'genesis_add_inpost_seo_box' );
  *
  * If the post type does not support genesis-seo, then the SEO meta box will not be added.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see genesis_inpost_seo_box() Generates the content in the meta box.
  */
 function genesis_add_inpost_seo_box() {
 
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+	foreach ( (array) get_post_types(
+		[
+			'public' => true,
+		]
+	) as $type ) {
 		if ( post_type_supports( $type, 'genesis-seo' ) ) {
 			add_meta_box( 'genesis_inpost_seo_box', __( 'Theme SEO Settings', 'genesis' ), 'genesis_inpost_seo_box', $type, 'normal', 'high' );
 		}
-
 	}
 
 	add_action( 'load-post.php', 'genesis_seo_contextual_help' );
@@ -39,7 +42,7 @@ function genesis_add_inpost_seo_box() {
 /**
  * Callback for in-post SEO meta box.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 function genesis_inpost_seo_box() {
 
@@ -68,7 +71,7 @@ add_action( 'save_post', 'genesis_inpost_seo_save', 1, 2 );
  *
  * Some values get sanitized, the rest are pulled from identically named sub-keys in the $_POST['genesis_seo'] array.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param int     $post_id Post ID.
  * @param WP_Post $post    Post object.
@@ -76,26 +79,31 @@ add_action( 'save_post', 'genesis_inpost_seo_save', 1, 2 );
  */
 function genesis_inpost_seo_save( $post_id, $post ) {
 
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Filtered Later
 	if ( ! isset( $_POST['genesis_seo'] ) ) {
 		return;
 	}
 
 	// Merge user submitted options with fallback defaults.
-	$data = wp_parse_args( $_POST['genesis_seo'], array(
-		'_genesis_title'         => '',
-		'_genesis_description'   => '',
-		'_genesis_keywords'      => '',
-		'_genesis_canonical_uri' => '',
-		'redirect'               => '',
-		'_genesis_noindex'       => 0,
-		'_genesis_nofollow'      => 0,
-		'_genesis_noarchive'     => 0,
-	) );
+	$data = wp_parse_args(
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Filtered Later
+		$_POST['genesis_seo'],
+		[
+			'_genesis_title'         => '',
+			'_genesis_description'   => '',
+			'_genesis_keywords'      => '',
+			'_genesis_canonical_uri' => '',
+			'redirect'               => '',
+			'_genesis_noindex'       => 0,
+			'_genesis_nofollow'      => 0,
+			'_genesis_noarchive'     => 0,
+		]
+	);
 
 	// Sanitize the title, description, and tags.
-	foreach ( (array) $data as $key => $value ) {
-		if ( in_array( $key, array( '_genesis_title', '_genesis_description', '_genesis_keywords' ) ) ) {
-			$data[ $key ] = strip_tags( $value );
+	foreach ( $data as $key => $value ) {
+		if ( in_array( $key, [ '_genesis_title', '_genesis_description', '_genesis_keywords' ], true ) ) {
+			$data[ $key ] = wp_strip_all_tags( $value );
 		}
 	}
 
@@ -121,7 +129,11 @@ function genesis_add_inpost_scripts_box() {
 		return;
 	}
 
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+	foreach ( (array) get_post_types(
+		[
+			'public' => true,
+		]
+	) as $type ) {
 		if ( post_type_supports( $type, 'genesis-scripts' ) ) {
 			add_meta_box( 'genesis_inpost_scripts_box', __( 'Scripts', 'genesis' ), 'genesis_inpost_scripts_box', $type, 'normal', 'low' );
 		}
@@ -153,6 +165,7 @@ add_action( 'save_post', 'genesis_inpost_scripts_save', 1, 2 );
  */
 function genesis_inpost_scripts_save( $post_id, $post ) {
 
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Filtered Later
 	if ( ! isset( $_POST['genesis_seo'] ) ) {
 		return;
 	}
@@ -163,38 +176,55 @@ function genesis_inpost_scripts_save( $post_id, $post ) {
 	}
 
 	// Merge user submitted options with fallback defaults.
-	$data = wp_parse_args( $_POST['genesis_seo'], array(
-		'_genesis_scripts'               => '',
-		'_genesis_scripts_body'          => '',
-		'_genesis_scripts_body_position' => '',
-	) );
-
-	// Compensate for stripslashes in `genesis_get_custom_field()` by storing with slashes.
-	$data['_genesis_scripts']      = wp_slash( $data['_genesis_scripts'] );
-	$data['_genesis_scripts_body'] = wp_slash( $data['_genesis_scripts_body'] );
+	$data = wp_parse_args(
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Filtered Later
+		$_POST['genesis_seo'],
+		[
+			'_genesis_scripts'               => '',
+			'_genesis_scripts_body'          => '',
+			'_genesis_scripts_body_position' => '',
+		]
+	);
 
 	genesis_save_custom_fields( $data, 'genesis_inpost_scripts_save', 'genesis_inpost_scripts_nonce', $post );
 
 }
 
-add_action( 'admin_menu', 'genesis_add_inpost_layout_box' );
+add_action( 'add_meta_boxes', 'genesis_add_inpost_layout_box', 10, 2 );
 /**
  * Register a new meta box to the post or page edit screen, so that the user can set layout options on a per-post or
  * per-page basis.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @see genesis_inpost_layout_box() Generates the content in the boxes
  *
+ * @param string  $post_type Post type.
+ * @param WP_Post $post      Post object.
+ *
  * @return void Return early if Genesis layouts are not supported.
  */
-function genesis_add_inpost_layout_box() {
+function genesis_add_inpost_layout_box( $post_type, $post ) {
 
 	if ( ! current_theme_supports( 'genesis-inpost-layouts' ) ) {
 		return;
 	}
 
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+	$current_screen = get_current_screen();
+
+	if (
+		method_exists( $current_screen, 'is_block_editor' )
+		&& $current_screen->is_block_editor()
+		&& post_type_supports( $post_type, 'custom-fields' )
+	) {
+		return;
+	}
+
+	foreach ( (array) get_post_types(
+		[
+			'public' => true,
+		]
+	) as $type ) {
 		if ( post_type_supports( $type, 'genesis-layouts' ) ) {
 			add_meta_box( 'genesis_inpost_layout_box', __( 'Layout Settings', 'genesis' ), 'genesis_inpost_layout_box', $type, 'normal', 'high' );
 		}
@@ -205,7 +235,7 @@ function genesis_add_inpost_layout_box() {
 /**
  * Callback for in-post layout meta box.
  *
- * @since 0.2.2
+ * @since 1.0.0
  */
 function genesis_inpost_layout_box() {
 
@@ -219,7 +249,7 @@ add_action( 'save_post', 'genesis_inpost_layout_save', 1, 2 );
  *
  * Since there's no sanitizing of data, the values are pulled from identically named keys in $_POST.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @param int     $post_id Post ID.
  * @param WP_Post $post    Post object.
@@ -227,15 +257,20 @@ add_action( 'save_post', 'genesis_inpost_layout_save', 1, 2 );
  */
 function genesis_inpost_layout_save( $post_id, $post ) {
 
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Filtered Later
 	if ( ! isset( $_POST['genesis_layout'] ) ) {
 		return;
 	}
 
-	$data = wp_parse_args( $_POST['genesis_layout'], array(
-		'_genesis_layout'            => '',
-		'_genesis_custom_body_class' => '',
-		'_genesis_post_class'        => '',
-	) );
+	$data = wp_parse_args(
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Filtered Later
+		$_POST['genesis_layout'],
+		[
+			'_genesis_layout'            => '',
+			'_genesis_custom_body_class' => '',
+			'_genesis_post_class'        => '',
+		]
+	);
 
 	$data = array_map( 'genesis_sanitize_html_classes', $data );
 

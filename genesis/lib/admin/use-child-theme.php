@@ -7,8 +7,8 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'admin_notices', 'genesis_use_child_theme_notice' );
@@ -24,12 +24,12 @@ function genesis_use_child_theme_notice() {
 		return;
 	}
 
-	$allowed_html = array(
-		'a' => array(
-			'href' => array(),
-		),
-	);
+	$allowed_html = [
+		'a' => [
+			'href' => [],
+		],
+	];
 
-	include( GENESIS_VIEWS_DIR . '/misc/use-child-theme-notice.php' );
+	include GENESIS_VIEWS_DIR . '/misc/use-child-theme-notice.php';
 
 }

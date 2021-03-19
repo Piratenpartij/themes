@@ -7,14 +7,14 @@
  *
  * @package Genesis\Images
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
  * Pull an attachment ID from a post, if one exists.
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param int $index   Optional. Index of which image to return from a post. Default is 0.
  * @param int $post_id Optional. Post ID. Default is `get_the_ID()`.
@@ -24,13 +24,13 @@ function genesis_get_image_id( $index = 0, $post_id = null ) {
 
 	$image_ids = array_keys(
 		get_children(
-			array(
-				'post_parent'    => $post_id ? $post_id : get_the_ID(),
-				'post_type'	     => 'attachment',
+			[
+				'post_parent'    => $post_id ?: get_the_ID(),
+				'post_type'      => 'attachment',
 				'post_mime_type' => 'image',
 				'orderby'        => 'menu_order',
-				'order'	         => 'ASC',
-			)
+				'order'          => 'ASC',
+			]
 		)
 	);
 
@@ -55,14 +55,14 @@ function genesis_get_image_id( $index = 0, $post_id = null ) {
  *
  * Applies `genesis_get_image_default_args`, `genesis_pre_get_image` and `genesis_get_image` filters.
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param array|string $args Optional. Image query arguments. Default is empty array.
  * @return string|bool Return image element HTML, URL of image, or `false`.
  */
-function genesis_get_image( $args = array() ) {
+function genesis_get_image( $args = [] ) {
 
-	$defaults = array(
+	$defaults = [
 		'post_id'  => null,
 		'format'   => 'html',
 		'size'     => 'full',
@@ -70,7 +70,7 @@ function genesis_get_image( $args = array() ) {
 		'attr'     => '',
 		'fallback' => 'first-attached',
 		'context'  => '',
-	);
+	];
 
 	/**
 	 * A filter on the default parameters used by `genesis_get_image()`.
@@ -100,8 +100,8 @@ function genesis_get_image( $args = array() ) {
 
 	// If we have an id, get the HTML and URL.
 	if ( isset( $id ) ) {
-		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
-		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
+		$html        = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
+		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false );
 	} elseif ( is_array( $args['fallback'] ) ) {
 		// Else if fallback HTML and URL exist, use them.
 		$id   = 0;
@@ -143,22 +143,23 @@ function genesis_get_image( $args = array() ) {
  *  - num    - integer, default is 0
  *  - attr   - string, default is ''
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param array|string $args Optional. Image query arguments. Default is empty array.
  * @return null|false Returns `false` if URL is empty.
  */
-function genesis_image( $args = array() ) {
+function genesis_image( $args = [] ) {
 
 	$image = genesis_get_image( $args );
 
 	if ( $image ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $image;
 
 		return null;
-	} else {
-		return false;
 	}
+
+	return false;
 
 }
 
@@ -174,33 +175,45 @@ function genesis_image( $args = array() ) {
  * @return array Two-dimensional, with `width`, `height` and `crop` sub-keys.
  */
 function genesis_get_image_sizes() {
-
 	global $_wp_additional_image_sizes;
 
-	$sizes = array();
+	/**
+	 * Allows controlling the image sizes before running the get_intermediate_image_sizes() logic.
+	 *
+	 * The return value must be false or a two-dimensional array with `width`, `height`, and `crop` subkeys.
+	 *
+	 * @param bool|array $pre False or genesis_get_image_sizes compatible array.
+	 */
+	$pre = apply_filters( 'genesis_pre_get_image_sizes', false );
 
-	foreach ( get_intermediate_image_sizes() as $_size ) {
-
-		if ( in_array( $_size, array( 'thumbnail', 'medium', 'large' ) ) ) {
-
-			$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
-			$sizes[ $_size ]['height'] = get_option( "{$_size}_size_h" );
-			$sizes[ $_size ]['crop']   = (bool) get_option( "{$_size}_crop" );
-
-		} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
-
-			$sizes[ $_size ] = array(
-				'width'  => $_wp_additional_image_sizes[ $_size ]['width'],
-				'height' => $_wp_additional_image_sizes[ $_size ]['height'],
-				'crop'   => $_wp_additional_image_sizes[ $_size ]['crop'],
-			);
-
-		}
-
+	if ( $pre ) {
+		return $pre;
 	}
 
-	return $sizes;
+	$sizes = [];
 
+	foreach ( get_intermediate_image_sizes() as $size ) {
+		if ( isset( $_wp_additional_image_sizes[ $size ] ) ) {
+			$sizes[ $size ] = [
+				'width'  => absint( $_wp_additional_image_sizes[ $size ]['width'] ),
+				'height' => absint( $_wp_additional_image_sizes[ $size ]['height'] ),
+				'crop'   => $_wp_additional_image_sizes[ $size ]['crop'],
+			];
+		} else {
+			$sizes[ $size ] = [
+				'width'  => absint( get_option( "{$size}_size_w" ) ),
+				'height' => absint( get_option( "{$size}_size_h" ) ),
+				'crop'   => (bool) get_option( "{$size}_crop" ),
+			];
+		}
+	}
+
+	/**
+	 * Allows filtering the genesis_get_image_sizes() output.
+	 *
+	 * @param array $sizes Two-dimensional, with `width`, `height` and `crop` sub-keys.
+	 */
+	return (array) apply_filters( 'genesis_get_image_sizes', $sizes );
 }
 
 /**
@@ -212,7 +225,7 @@ function genesis_get_image_sizes() {
  */
 function genesis_get_image_sizes_for_customizer() {
 
-	$sizes = array();
+	$sizes = [];
 
 	foreach ( (array) genesis_get_image_sizes() as $name => $size ) {
 		$sizes[ $name ] = $name . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')';
@@ -220,4 +233,76 @@ function genesis_get_image_sizes_for_customizer() {
 
 	return $sizes;
 
+}
+
+/**
+ * Is the singular featured image set to display on the current page?
+ *
+ * @since 3.1.0
+ *
+ * @return bool True if the singular featured image is hidden or will not display.
+ */
+function genesis_singular_image_hidden_on_current_page() {
+
+	$post_type                = get_post_type();
+	$supports_singular_images = post_type_supports( $post_type, 'genesis-singular-images' );
+	$singular_images_enabled  = genesis_get_option( "show_featured_image_{$post_type}" );
+
+	/**
+	 * Prevents the “hide featured image” checkbox from appearing or functioning by returning false.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param bool $image_toggle_enabled True if featured image toggle is enabled, false otherwise.
+	 */
+	$image_toggle_enabled = apply_filters( 'genesis_singular_image_toggle_enabled', true );
+
+	if ( ! $supports_singular_images || ! $singular_images_enabled || ! $image_toggle_enabled ) {
+		return true;
+	}
+
+	return get_post_meta( get_queried_object_id(), '_genesis_hide_singular_image', true );
+
+}
+
+/**
+ * Which post types have singular images enabled and active?
+ *
+ * @since 3.1.0
+ *
+ * @return array The singular images with active 'genesis-singular-images' support.
+ */
+function genesis_post_types_with_singular_images_enabled() {
+
+	$result             = [];
+	$types_with_support = get_post_types_by_support( 'genesis-singular-images' );
+
+	foreach ( $types_with_support as $type ) {
+		if ( genesis_get_option( "show_featured_image_{$type}", GENESIS_SETTINGS_FIELD, false ) ) {
+			$result[] = $type;
+		}
+	}
+
+	return $result;
+
+}
+
+add_filter( 'wp_get_attachment_image_attributes', 'genesis_image_loading', 10, 3 );
+/**
+ * Filter the attributes of all images retrieved with `wp_get_attachment_image`, add `loading="lazy"` to enable lazy loading in Chrome.
+ *
+ * @since 3.2.0
+ *
+ * @param array $attr Attributes for the image markup.
+ *
+ * @return array The filtered $attr array.
+ */
+function genesis_image_loading( $attr ) {
+	if ( ! current_theme_supports( 'genesis-lazy-load-images' ) || function_exists( 'wp_lazy_loading_enabled' ) ) {
+		return $attr;
+	}
+
+	$attr['loading'] = 'lazy';
+
+	return $attr;
 }

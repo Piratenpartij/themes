@@ -83,7 +83,9 @@ function mh_magazine_lite_customize_register($wp_customize) {
 
 	$wp_customize->add_section('mh_magazine_lite_general', array('title' => esc_html__('General', 'mh-magazine-lite'), 'priority' => 1, 'panel' => 'mh_theme_options'));
 	$wp_customize->add_section('mh_magazine_lite_layout', array('title' => esc_html__('Layout', 'mh-magazine-lite'), 'priority' => 2, 'panel' => 'mh_theme_options'));
-	$wp_customize->add_section('mh_magazine_lite_upgrade', array('title' => esc_html__('More Features &amp; Options', 'mh-magazine-lite'), 'priority' => 3, 'panel' => 'mh_theme_options'));
+	if (mh_magazine_lite_official_theme()) {
+		$wp_customize->add_section('mh_magazine_lite_upgrade', array('title' => esc_html__('More Features &amp; Options', 'mh-magazine-lite'), 'priority' => 3, 'panel' => 'mh_theme_options'));
+	}
 
     /***** Add Settings *****/
 

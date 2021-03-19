@@ -36,4 +36,4 @@ add_action( 'customize_register', 'ppnl_customize_register', 11 );
 function ppnl_customize_preview_js() {
 	wp_enqueue_script( 'ppnl-customize-preview', get_template_directory_uri() . '/js/customize-preview.js', array( 'customize-preview' ), '20141216', true );
 }
-add_action( 'customize_preview_init', 'ppnl_customize_preview_js' );
+//add_action( 'customize_preview_init', 'ppnl_customize_preview_js' );

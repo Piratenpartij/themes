@@ -1,7 +1,7 @@
 === MH UrbanMag WordPress Theme (Child Theme) ===
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-MH UrbanMag WordPress Theme, Copyright 2016-2017 MH Themes
+MH UrbanMag WordPress Theme, Copyright 2016-2018 MH Themes
 MH UrbanMag is distributed under the terms of the GNU GPL
 
 ==================================
@@ -46,6 +46,9 @@ https://pixabay.com/en/city-contrast-urban-building-town-597160/
 ==================================
 Changelog
 ==================================
+
+= v1.1.5 24-10-2018 =
+* CSS adjustments
 
 = v1.1.4 27-08-2017 =
 * Renamed .mh-ad-spot CSS class to .mh-info-spot to prevent blocking by ad blockers

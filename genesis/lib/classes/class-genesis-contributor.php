@@ -7,8 +7,8 @@
  *
  * @package Genesis\Contributors
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -116,10 +116,10 @@ final class Genesis_Contributor {
 	 * @return string Contributor's role.
 	 */
 	public function get_named_role() {
-		$roles = array(
+		$roles = [
 			'contributor'    => __( 'Contributor', 'genesis' ),
 			'lead-developer' => __( 'Lead Developer', 'genesis' ),
-		);
+		];
 
 		if ( isset( $roles[ $this->role ] ) ) {
 			return $roles[ $this->role ];

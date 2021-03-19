@@ -57,7 +57,7 @@ class mh_magazine_lite_posts_stacked extends WP_Widget {
 										if (has_post_thumbnail()) {
 											the_post_thumbnail('mh-magazine-lite-large');
 										} else {
-											echo '<img class="mh-image-placeholder" src="' . get_template_directory_uri() . '/images/placeholder-large.png' . '" alt="' . esc_html__('No Picture', 'mh-magazine-lite') . '" />';
+											echo '<img class="mh-image-placeholder" src="' . get_template_directory_uri() . '/images/placeholder-large.png' . '" alt="' . esc_html__('No Image', 'mh-magazine-lite') . '" />';
 										} ?>
 										<article class="mh-posts-stacked-item">
 											<h3 class="mh-posts-stacked-title mh-posts-stacked-title-large">
@@ -87,7 +87,7 @@ class mh_magazine_lite_posts_stacked extends WP_Widget {
 										if (has_post_thumbnail()) {
 											the_post_thumbnail('mh-magazine-lite-medium');
 										} else {
-											echo '<img class="mh-image-placeholder" src="' . get_template_directory_uri() . '/images/placeholder-medium.png' . '" alt="' . esc_html__('No Picture', 'mh-magazine-lite') . '" />';
+											echo '<img class="mh-image-placeholder" src="' . get_template_directory_uri() . '/images/placeholder-medium.png' . '" alt="' . esc_html__('No Image', 'mh-magazine-lite') . '" />';
 										} ?>
 										<article class="mh-posts-stacked-item">
 											<h3 class="mh-posts-stacked-title mh-posts-stacked-title-small">

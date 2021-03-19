@@ -3,9 +3,9 @@
 Contributors: mh-themes
 Tags: one-column, two-columns, left-sidebar, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-logo, custom-menu, featured-images, full-width-template, theme-options, threaded-comments, footer-widgets, translation-ready, rtl-language-support, blog, entertainment, news
 
-Requires at least: 4.5.0
-Tested up to: 4.8.2
-Stable tag: 2.7.2
+Requires at least: 4.6.0
+Tested up to: 4.9.8
+Stable tag: 2.8.6
 License: GPL v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ Coming soon!
 
 == Copyright ==
 
-MH Magazine lite WordPress Theme, Copyright 2013-2017 MH Themes
+MH Magazine lite WordPress Theme, Copyright 2013-2018 MH Themes
 MH Magazine lite is distributed under the terms of the GNU GPL
 Theme URI: https://www.mhthemes.com/themes/mh/magazine-lite/
 
@@ -68,6 +68,51 @@ License: Free Public Domain (GPL Compatible)
 Overview: http://demo.mh-themes.com/magazine/credits/
 
 == Changelog ==
+
+= v2.8.6 24-10-2018 =
+* Fixed minor alignment issue with paginated posts
+
+= v2.8.5 11-10-2018 =
+* Added support for Gutenberg editor
+* Added CSS to style core Gutenberg blocks
+
+= v2.8.4 25-09-2018 =
+* Display admin notice only for official child themes
+
+= v2.8.3 20-08-2018 =
+* Updated translation files
+
+= v2.8.2 13-07-2018 =
+* Updated translation files
+
+= v2.8.1 16-06-2018 =
+* Updated translation files
+
+= v2.8.0 18-05-2018 =
+* Added support for GDPR features in WP 4.9.6
+* Updated translation files
+
+= v2.7.9 05-05-2018 =
+* Updated translation files
+
+= v2.7.8 10-04-2018 =
+* Fixed incorrect translatable string
+
+= v2.7.7 20-03-2018 =
+* Fixed incorrect translatable string
+
+= v2.7.6 18-02-2018 =
+* Fixed untranslatable string in content-loop.php
+
+= v2.7.5 04-01-2018 =
+* Updated date for copyright notice
+* Minor code improvements
+
+= v2.7.4 12-12-2017 =
+* Improved caption of featured image to use WordPress core function
+
+= v2.7.3 16-11-2017 =
+* Removed code to support shortcodes in widgets due to support by default in WP 4.9
 
 = v2.7.2 22-10-2017 =
 * CSS improvements to avoid conflicts with plugins based on Bootstrap

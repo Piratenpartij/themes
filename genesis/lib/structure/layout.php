@@ -7,8 +7,8 @@
  *
  * @package Genesis\Layout
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_filter( 'content_width', 'genesis_content_width', 10, 3 );
@@ -70,7 +70,7 @@ add_filter( 'body_class', 'genesis_header_body_classes' );
  *
  * We can use pseudo-variables in our CSS file, which helps us achieve multiple header layouts with minimal code.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @param array $classes Existing body classes.
  * @return array Amended body classes.
@@ -101,7 +101,7 @@ add_filter( 'body_class', 'genesis_layout_body_classes' );
  *
  * We can use pseudo-variables in our CSS file, which helps us achieve multiple site layouts with minimal code.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @param array $classes Existing body classes.
  * @return array Amended body classes.
@@ -113,6 +113,128 @@ function genesis_layout_body_classes( array $classes ) {
 	if ( $site_layout ) {
 		$classes[] = $site_layout;
 	}
+
+	return $classes;
+
+}
+
+add_filter( 'body_class', 'genesis_title_hidden_body_class' );
+/**
+ * Adds a `genesis-title-hidden` body class if title output is suppressed on the current page.
+ *
+ * @since 3.1.0
+ *
+ * @param array $classes Existing body classes.
+ * @return array Amended body classes.
+ */
+function genesis_title_hidden_body_class( array $classes ) {
+
+	if ( genesis_entry_header_hidden_on_current_page() ) {
+		$classes[] = 'genesis-title-hidden';
+	}
+
+	return $classes;
+
+}
+
+add_filter( 'body_class', 'genesis_breadcrumbs_hidden_body_class' );
+/**
+ * Adds a `genesis-breadcrumbs-hidden` body class if breadcrumbs are hidden on the current page.
+ *
+ * @since 3.1.0
+ *
+ * @param array $classes Existing body classes.
+ * @return array Amended body classes.
+ */
+function genesis_breadcrumbs_hidden_body_class( array $classes ) {
+
+	if ( genesis_breadcrumbs_hidden_on_current_page() || genesis_breadcrumbs_disabled_on_current_page() ) {
+		$classes[] = 'genesis-breadcrumbs-hidden';
+		return $classes;
+	}
+
+	$classes[] = 'genesis-breadcrumbs-visible';
+
+	return $classes;
+
+}
+
+add_filter( 'body_class', 'genesis_singular_image_hidden_body_class' );
+/**
+ * Adds a `genesis-singular-image-hidden` body class if “hide featured image” is enabled.
+ *
+ * @since 3.1.0
+ *
+ * @param array $classes Existing body classes.
+ * @return array Amended body classes.
+ */
+function genesis_singular_image_hidden_body_class( array $classes ) {
+
+	if ( ! is_singular() ) {
+		return $classes;
+	}
+
+	if ( ! post_type_supports( get_post_type(), 'genesis-singular-images' ) ) {
+		return $classes;
+	}
+
+	if ( genesis_singular_image_hidden_on_current_page() ) {
+		$classes[] = 'genesis-singular-image-hidden';
+	}
+
+	return $classes;
+
+}
+
+add_filter( 'body_class', 'genesis_singular_image_visible_body_class' );
+/**
+ * Adds a `genesis-singular-image-visible` body class.
+ *
+ * @since 3.1.1
+ *
+ * @param array $classes Existing body classes.
+ * @return array Amended body classes.
+ */
+function genesis_singular_image_visible_body_class( array $classes ) {
+
+	if (
+		is_singular()
+		&& ! genesis_singular_image_hidden_on_current_page()
+		&& genesis_get_singular_image()
+	) {
+		$classes[] = 'genesis-singular-image-visible';
+	}
+
+	return $classes;
+
+}
+
+add_filter( 'body_class', 'genesis_footer_widgets_hidden_body_class' );
+/**
+ * Adds `genesis-footer-widgets-hidden` and genesis-footer-widgets-visible` body classes if footer widgets
+ * are supported by the child theme and the Footer Widgets Panel is available in the Genesis Sidebar.
+ *
+ * @since 3.2.0
+ *
+ * @param array $classes Existing body classes.
+ * @return array Amended body classes.
+ */
+function genesis_footer_widgets_hidden_body_class( array $classes ) {
+
+	$footer_widgets                = get_theme_support( 'genesis-footer-widgets' );
+	$footer_widgets_toggle_enabled = apply_filters( 'genesis_footer_widgets_toggle_enabled', true );
+
+	// Return if theme does not support footer widgets or the Footer Widgets sidebar panel is disabled.
+	if ( ! $footer_widgets || ! isset( $footer_widgets[0] ) || ! is_numeric( $footer_widgets[0] ) || ! $footer_widgets_toggle_enabled ) {
+		return $classes;
+	}
+
+	if ( ! is_active_sidebar( 'footer-1' ) || genesis_footer_widgets_hidden_on_current_page() ) {
+		$classes[] = 'genesis-footer-widgets-hidden';
+		return $classes;
+	}
+
+	$classes[] = 'genesis-footer-widgets-visible';
 
 	return $classes;
 
@@ -197,7 +319,7 @@ add_action( 'genesis_after_content', 'genesis_get_sidebar' );
 /**
  * Output the sidebar.php file if layout allows for it.
  *
- * @since 0.2.0
+ * @since 1.0.0
  */
 function genesis_get_sidebar() {
 
@@ -216,14 +338,14 @@ add_action( 'genesis_after_content_sidebar_wrap', 'genesis_get_sidebar_alt' );
 /**
  * Output the sidebar_alt.php file if layout allows for it.
  *
- * @since 0.2.0
+ * @since 1.0.0
  */
 function genesis_get_sidebar_alt() {
 
 	$site_layout = genesis_site_layout();
 
 	// Don't load sidebar-alt on pages that don't need it.
-	if ( in_array( $site_layout, array( 'content-sidebar', 'sidebar-content', 'full-width-content' ) ) ) {
+	if ( in_array( $site_layout, [ 'content-sidebar', 'sidebar-content', 'full-width-content' ], true ) ) {
 		return;
 	}
 

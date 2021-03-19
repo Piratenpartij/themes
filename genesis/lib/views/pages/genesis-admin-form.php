@@ -7,8 +7,8 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -18,7 +18,19 @@
 
 		<?php settings_fields( $this->settings_field ); ?>
 
-		<?php do_action( "{$this->pagehook}_settings_page_form", $this->pagehook ); ?>
+		<?php
+		/**
+		 * Fires inside form admin page, inside the form element, before the bottom buttons.
+		 *
+		 * The dynamic part of the hook name is the page hook.
+		 *
+		 * @since ???
+		 *
+		 * @param string $page_hook Page hook.
+		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
+		do_action( "{$this->pagehook}_settings_page_form", $this->pagehook );
+		?>
 
 		<div class="bottom-buttons">
 			<?php submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false ); ?>

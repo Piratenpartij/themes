@@ -7,8 +7,8 @@
  *
  * @package Genesis\Header
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -21,11 +21,11 @@
 function genesis_get_seo_meta_description() {
 
 	$description = '';
-	$post_id = null;
+	$post_id     = null;
 
 	// If we're on the root page.
 	if ( genesis_is_root_page() ) {
-		$description = genesis_get_seo_option( 'home_description' ) ? genesis_get_seo_option( 'home_description' ) : get_bloginfo( 'description' );
+		$description = genesis_get_seo_option( 'home_description' ) ?: get_bloginfo( 'description' );
 	}
 
 	// When the page is set as the Posts Page in WordPress core, use the $post_id of the page when loading SEO values.
@@ -57,7 +57,7 @@ function genesis_get_seo_meta_description() {
 		$description      = ! empty( $term_description ) ? $term_description : '';
 	} elseif ( is_post_type_archive() && genesis_has_post_type_archive_support() ) {
 		$cpt_description = genesis_get_cpt_option( 'description' );
-		$description     = $cpt_description ? $cpt_description : '';
+		$description     = $cpt_description ?: '';
 	} elseif ( is_author() ) {
 		$description = get_the_author_meta( 'meta_description', (int) get_query_var( 'author' ) );
 	}
@@ -84,7 +84,7 @@ function genesis_get_seo_meta_description() {
 function genesis_get_seo_meta_keywords() {
 
 	$keywords = '';
-	$post_id = null;
+	$post_id  = null;
 
 	// If we're on the root page.
 	if ( genesis_is_root_page() ) {
@@ -114,7 +114,7 @@ function genesis_get_seo_meta_keywords() {
 		$term     = get_queried_object();
 		$keywords = get_term_meta( $term->term_id, 'keywords', true );
 	} elseif ( is_post_type_archive() && genesis_has_post_type_archive_support() ) {
-		$keywords = genesis_get_cpt_option( 'keywords' ) ? genesis_get_cpt_option( 'keywords' ) : '';
+		$keywords = genesis_get_cpt_option( 'keywords' ) ?: '';
 	} elseif ( is_author() ) {
 		$keywords = get_the_author_meta( 'meta_keywords', (int) get_query_var( 'author' ) );
 	}
@@ -132,7 +132,7 @@ function genesis_get_seo_meta_keywords() {
 }
 
 /**
- * Determine the `noindex`, `nofollow`, `noodp`, `noydir`, `noarchive` robots meta code for the current context.
+ * Determine the `noindex`, `nofollow`, `noarchive` robots meta code for the current context.
  *
  * @since 2.4.0
  *
@@ -146,13 +146,11 @@ function genesis_get_robots_meta_content() {
 	$post_id = null;
 
 	// Defaults.
-	$directives = array(
+	$directives = [
 		'noindex'   => '',
 		'nofollow'  => '',
 		'noarchive' => genesis_get_seo_option( 'noarchive' ) ? 'noarchive' : '',
-		'noodp'     => genesis_get_seo_option( 'noodp' ) ? 'noodp' : '',
-		'noydir'    => genesis_get_seo_option( 'noydir' ) ? 'noydir' : '',
-	);
+	];
 
 	// Check root page SEO settings, set noindex, nofollow and noarchive.
 	if ( genesis_is_root_page() ) {
@@ -208,7 +206,7 @@ function genesis_get_robots_meta_content() {
 	 *
 	 * @since 2.4.0
 	 *
-	 * @param array $directives May contain keys for `noindex`, `nofollow`, `noodp`, `noydir`, `noarchive`.
+	 * @param array $directives May contain keys for `noindex`, `nofollow`, `noarchive`.
 	 */
 	$directives = apply_filters( 'genesis_get_robots_meta_content', $directives );
 
@@ -218,7 +216,6 @@ function genesis_get_robots_meta_content() {
 	return implode( ',', $directives );
 }
 
-add_action( 'wp_head', 'genesis_load_favicon' );
 /**
  * Return favicon URL.
  *
@@ -241,7 +238,7 @@ function genesis_get_favicon_url() {
 	 */
 	$pre = apply_filters( 'genesis_pre_load_favicon', false );
 
-	if ( $pre !== false ) {
+	if ( false !== $pre ) {
 		$favicon = $pre;
 	} elseif ( file_exists( CHILD_DIR . '/images/favicon.ico' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.ico';
@@ -258,7 +255,7 @@ function genesis_get_favicon_url() {
 	/**
 	 * Filter the favicon URL.
 	 *
-	 * @since 0.2.0
+	 * @since 1.0.0
 	 *
 	 * @param string $favicon Favicon URL.
 	 */

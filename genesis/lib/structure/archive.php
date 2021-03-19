@@ -7,11 +7,10 @@
  *
  * @package Genesis\Archives
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
-add_filter( 'genesis_term_intro_text_output', 'wpautop' );
 add_action( 'genesis_before_loop', 'genesis_do_taxonomy_title_description', 15 );
 /**
  * Add custom heading and / or description to category / tag / taxonomy archive pages.
@@ -21,17 +20,20 @@ add_action( 'genesis_before_loop', 'genesis_do_taxonomy_title_description', 15 )
  *
  * If there's a title to display, it is marked up as a level 1 heading.
  *
- * If there's a description to display, it runs through `wpautop()` before being added to a div.
+ * If there's a description to display, it runs through `wpautop()`,
+ * `do_shortcode()` and `autoembed()` before being added to a div.
  *
+ * @since 2.10.0 Filter intro text with `do_shortcode()` and `autoembed()`.
  * @since 1.3.0
  *
  * @global WP_Query $wp_query Query object.
+ * @global WP_Embed $wp_embed Embed object.
  *
  * @return void Return early if not the correct archive page, or no term is found.
  */
 function genesis_do_taxonomy_title_description() {
 
-	global $wp_query;
+	global $wp_query, $wp_embed;
 
 	if ( ! is_category() && ! is_tag() && ! is_tax() ) {
 		return;
@@ -49,10 +51,21 @@ function genesis_do_taxonomy_title_description() {
 	}
 
 	$intro_text = get_term_meta( $term->term_id, 'intro_text', true );
-	$intro_text = apply_filters( 'genesis_term_intro_text_output', $intro_text ? $intro_text : '' );
+	$intro_text = $wp_embed->autoembed( $intro_text );
+	$intro_text = do_shortcode( $intro_text );
+	$intro_text = wpautop( $intro_text );
 
 	/**
-	 * Archive headings output hook.
+	 * Filter the archive intro text.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $intro_text The current archive intro text.
+	 */
+	$intro_text = apply_filters( 'genesis_term_intro_text_output', $intro_text ?: '' );
+
+	/**
+	 * Fires at end of doing taxonomy archive title and description.
 	 *
 	 * Allows you to reorganize output of the archive headings.
 	 *
@@ -94,7 +107,7 @@ function genesis_do_author_title_description() {
 	}
 
 	$intro_text = get_the_author_meta( 'intro_text', (int) get_query_var( 'author' ) );
-	$intro_text = apply_filters( 'genesis_author_intro_text_output', $intro_text ? $intro_text : '' );
+	$intro_text = apply_filters( 'genesis_author_intro_text_output', $intro_text ?: '' );
 
 	/** This action is documented in lib/structure/archive.php */
 	do_action( 'genesis_archive_title_descriptions', $heading, $intro_text, 'author-archive-description' );
@@ -154,7 +167,7 @@ function genesis_do_cpt_archive_title_description() {
 	}
 
 	$intro_text = genesis_get_cpt_option( 'intro_text' );
-	$intro_text = apply_filters( 'genesis_cpt_archive_intro_text_output', $intro_text ? $intro_text : '' );
+	$intro_text = apply_filters( 'genesis_cpt_archive_intro_text_output', $intro_text ?: '' );
 
 	/** This action is documented in lib/structure/archive.php */
 	do_action( 'genesis_archive_title_descriptions', $heading, $intro_text, 'cpt-archive-description' );
@@ -206,7 +219,7 @@ function genesis_do_blog_template_heading() {
 	if (
 		! is_page_template( 'page_blog.php' )
 		|| ! genesis_a11y( 'headings' )
-		|| get_queried_object_id() == get_option( 'page_for_posts' )
+		|| get_queried_object_id() === get_option( 'page_for_posts' )
 	) {
 		return;
 	}
@@ -244,6 +257,10 @@ function genesis_do_posts_page_heading() {
 		return;
 	}
 
+	if ( genesis_entry_header_hidden_on_current_page() ) {
+		return;
+	}
+
 	/** This action is documented in lib/structure/archive.php */
 	do_action( 'genesis_archive_title_descriptions', get_the_title( $posts_page ), '', 'posts-page-description' );
 
@@ -263,10 +280,12 @@ function genesis_do_archive_headings_open( $heading = '', $intro_text = '', $con
 
 	if ( $heading || $intro_text ) {
 
-		genesis_markup( array(
-			'open'    => '<div %s>',
-			'context' => $context,
-		) );
+		genesis_markup(
+			[
+				'open'    => '<div %s>',
+				'context' => $context,
+			]
+		);
 
 	}
 }
@@ -285,10 +304,12 @@ function genesis_do_archive_headings_close( $heading = '', $intro_text = '', $co
 
 	if ( $heading || $intro_text ) {
 
-		genesis_markup( array(
-			'close'   => '</div>',
-			'context' => $context,
-		) );
+		genesis_markup(
+			[
+				'close'   => '</div>',
+				'context' => $context,
+			]
+		);
 
 	}
 }
@@ -306,7 +327,7 @@ add_action( 'genesis_archive_title_descriptions', 'genesis_do_archive_headings_h
 function genesis_do_archive_headings_headline( $heading = '', $intro_text = '', $context = '' ) {
 
 	if ( $context && $heading ) {
-		printf( '<h1 %s>%s</h1>', genesis_attr( 'archive-title' ), strip_tags( $heading ) );
+		printf( '<h1 %s>%s</h1>', genesis_attr( 'archive-title' ), esc_html( wp_strip_all_tags( $heading ) ) );
 	}
 
 }
@@ -324,6 +345,7 @@ add_action( 'genesis_archive_title_descriptions', 'genesis_do_archive_headings_i
 function genesis_do_archive_headings_intro_text( $heading = '', $intro_text = '', $context = '' ) {
 
 	if ( $context && $intro_text ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $intro_text;
 	}
 

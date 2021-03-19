@@ -4,7 +4,7 @@ Theme URI: https://www.mhthemes.com/themes/mh/magazine-lite/
 Description: MH Magazine lite is one of the most popular free responsive magazine, news, newspaper and blog WordPress themes for modern online magazines, dynamic news websites, professional blogs and other editorial websites. This free magazine theme is fast, secure, SEO friendly and perfectly suitable for topics like international news, politics, lifestyle, fashion, business, sports, gadgets, travel or anything else. If you would like to gain access to more awesome features, flexible custom widgets and useful options to customize your website, you can upgrade to the premium version of MH Magazine and take your website to the next level. You can also learn more about this dynamic magazine WordPress theme on the MH Themes website.
 Author: MH Themes
 Author URI: https://www.mhthemes.com/
-Version: 2.7.2
+Version: 2.8.6
 Tags: one-column, two-columns, left-sidebar, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-logo, custom-menu, featured-images, full-width-template, theme-options, threaded-comments, footer-widgets, translation-ready, rtl-language-support, blog, entertainment, news
 Text Domain: mh-magazine-lite
 Domain Path: /languages/
@@ -570,6 +570,15 @@ div.wpcf7-response-output { margin: 20px 0 15px; }
 .widget_recent_entries li:first-child, .recentcomments:first-child { padding-top: 0; }
 .widget_recent_entries .post-date { display: block; font-size: 11px; font-size: 0.6875rem; color: #979797; margin-bottom: 5px; }
 .mh-footer-widget.widget_recent_entries li, .mh-footer-widget .recentcomments { border-color: rgba(255, 255, 255, 0.3); }
+
+/***** Gutenberg - Core Blocks *****/
+
+.wp-block-image { display: block; margin: 20px 0; margin: 1.25rem 0; }
+.wp-block-image .aligncenter { text-align: center; }
+.wp-block-image figcaption, .wp-block-audio figcaption { color: #000; }
+.wp-block-image figcaption, .wp-block-image .aligncenter > figcaption, .wp-block-image .alignleft > figcaption, .wp-block-image .alignright > figcaption, .wp-block-image.is-resized > figcaption, .wp-block-audio figcaption { display: block; font-size: 12px; font-size: 0.75rem; font-weight: 700; line-height: 1.4; margin-top: 5px; }
+.wp-block-audio audio { width: 100%; }
+.wp-block-gallery, .entry-content .wp-block-gallery { display: flex; margin: 0 -8px 20px; list-style-type: none; }
 
 /***** Media Queries *****/
 

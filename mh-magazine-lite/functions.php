@@ -6,6 +6,19 @@ $mh_magazine_lite_data = wp_get_theme('mh-magazine-lite');
 $mh_magazine_lite_version = $mh_magazine_lite_data['Version'];
 $mh_magazine_lite_options = get_option('mh_magazine_lite_options');
 
+/***** Check if Active Theme is Official Theme / Child Theme by MH Themes *****/
+
+function mh_magazine_lite_official_theme() {
+	$active_theme = wp_get_theme();
+	$active_theme_author = $active_theme['Author'];
+	if ($active_theme_author === '<a href="https://www.mhthemes.com/">MH Themes</a>') {
+		$official_theme = true;
+	} else {
+		$official_theme = false;
+	}
+	return $official_theme;
+}
+
 /***** Custom Hooks *****/
 
 function mh_before_header() {
@@ -35,10 +48,6 @@ function mh_after_footer() {
 function mh_before_container_close() {
     do_action('mh_before_container_close');
 }
-
-/***** Enable Shortcodes inside Widgets	*****/
-
-add_filter('widget_text', 'do_shortcode');
 
 /***** Theme Setup *****/
 

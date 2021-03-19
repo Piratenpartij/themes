@@ -7,8 +7,8 @@
  *
  * @package Genesis\Assets
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_meta', 'genesis_load_stylesheet' );
@@ -17,7 +17,7 @@ add_action( 'genesis_meta', 'genesis_load_stylesheet' );
  *
  * If a child theme is active, it loads the child theme's stylesheet, otherwise, it loads the Genesis style sheet.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @see genesis_enqueue_main_stylesheet() Enqueue main style sheet.
  */
@@ -36,10 +36,12 @@ function genesis_load_stylesheet() {
  */
 function genesis_enqueue_main_stylesheet() {
 
-	$version = defined( 'CHILD_THEME_VERSION' ) && CHILD_THEME_VERSION ? CHILD_THEME_VERSION : PARENT_THEME_VERSION;
-	$handle  = defined( 'CHILD_THEME_NAME' ) && CHILD_THEME_NAME ? sanitize_title_with_dashes( CHILD_THEME_NAME ) : 'child-theme';
-
-	wp_enqueue_style( $handle, get_stylesheet_uri(), false, $version );
+	wp_enqueue_style(
+		genesis_get_theme_handle(),
+		get_stylesheet_uri(),
+		false,
+		genesis_get_theme_version()
+	);
 
 }
 
@@ -47,16 +49,16 @@ add_action( 'admin_print_styles', 'genesis_load_admin_styles' );
 /**
  * Enqueue Genesis admin styles.
  *
- * @since 0.2.3
+ * @since 1.0.0
  */
 function genesis_load_admin_styles() {
 
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	$suffix = genesis_is_in_dev_mode() ? '' : '.min';
 
-	wp_enqueue_style( 'genesis_admin_css', GENESIS_CSS_URL . "/admin{$suffix}.css", array(), PARENT_THEME_VERSION );
+	wp_enqueue_style( 'genesis_admin_css', GENESIS_CSS_URL . "/admin{$suffix}.css", [], PARENT_THEME_VERSION );
 
 	if ( is_rtl() ) {
-		wp_enqueue_style( 'genesis_admin_rtl_css', GENESIS_CSS_URL . "/admin-rtl{$suffix}.css", array(), PARENT_THEME_VERSION );
+		wp_enqueue_style( 'genesis_admin_rtl_css', GENESIS_CSS_URL . "/admin-rtl{$suffix}.css", [], PARENT_THEME_VERSION );
 	}
 
 }

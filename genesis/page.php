@@ -7,8 +7,8 @@
  *
  * @package Genesis\Templates
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 // This file handles pages, but only exists for the sake of child theme forward compatibility.

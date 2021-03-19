@@ -5,7 +5,7 @@
 			if (has_post_thumbnail()) {
 				the_post_thumbnail('mh-magazine-lite-medium');
 			} else {
-				echo '<img class="mh-image-placeholder" src="' . get_template_directory_uri() . '/images/placeholder-medium.png' . '" alt="No Picture" />';
+				echo '<img class="mh-image-placeholder" src="' . get_template_directory_uri() . '/images/placeholder-medium.png' . '" alt="' . esc_html__('No Image', 'mh-magazine-lite') . '" />';
 			} ?>
 		</a>
 	</figure>

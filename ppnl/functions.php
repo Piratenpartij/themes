@@ -344,7 +344,7 @@ add_filter ('drupal2wp_modify_post', 'ppnl_update_drupal_post');
 
 function ppnl_allowedtags() {
 // Add custom tags to this string
-	return '<br>,<em>,<i>,<a>,<p>,<pre><b><strong>';
+	return '<br>,<em>,<i>,<a>,<p>,<pre>,<b>,<strong>,<video>';
 }
 
 if ( ! function_exists( 'ppnl_custom_wp_trim_excerpt' ) ) :

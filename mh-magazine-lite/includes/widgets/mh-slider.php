@@ -49,9 +49,9 @@ class mh_slider_hp_widget extends WP_Widget {
 										}
 									} else {
 										if ($instance['image_size'] == 'large') {
-											echo '<img class="mh-image-placeholder" src="' . esc_url(get_template_directory_uri() . '/images/placeholder-slider.png') . '" alt="' . esc_html__('No Picture', 'mh-magazine-lite') . '" />';
+											echo '<img class="mh-image-placeholder" src="' . esc_url(get_template_directory_uri() . '/images/placeholder-slider.png') . '" alt="' . esc_html__('No Image', 'mh-magazine-lite') . '" />';
 										} else {
-											echo '<img class="mh-image-placeholder" src="' . esc_url(get_template_directory_uri() . '/images/placeholder-content.png') . '" alt="' . esc_html__('No Picture', 'mh-magazine-lite') . '" />';
+											echo '<img class="mh-image-placeholder" src="' . esc_url(get_template_directory_uri() . '/images/placeholder-content.png') . '" alt="' . esc_html__('No Image', 'mh-magazine-lite') . '" />';
 										}
 									} ?>
 								</a>

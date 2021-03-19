@@ -7,8 +7,8 @@
  *
  * @package Genesis\Options
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -19,7 +19,7 @@
  * Values pulled from the database are cached on each request, so a second request for the same value won't cause a
  * second DB interaction.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param string $setting   Optional. Settings field name. Eventually defaults to `GENESIS_SETTINGS_FIELD` if not
@@ -31,7 +31,7 @@
 function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 
 	// The default is set here, so it doesn't have to be repeated in the function arguments for genesis_option() too.
-	$setting = $setting ? $setting : GENESIS_SETTINGS_FIELD;
+	$setting = $setting ?: GENESIS_SETTINGS_FIELD;
 
 	// Allow child theme to short circuit this function.
 	$pre = apply_filters( "genesis_pre_get_option_{$key}", null, $setting );
@@ -39,7 +39,7 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 		return $pre;
 	}
 
-	// Bypass cache if viewing site in customizer.
+	// Bypass cache if viewing site in Customizer.
 	if ( genesis_is_customizer() ) {
 		$use_cache = false;
 	}
@@ -52,45 +52,46 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 			return '';
 		}
 
-		return is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
+		return is_array( $options[ $key ] ) ? $options[ $key ] : wp_kses_decode_entities( $options[ $key ] );
 	}
 
 	// Setup caches.
-	static $settings_cache = array();
-	static $options_cache  = array();
+	static $settings_cache = [];
+	static $options_cache  = [];
 
 	// Check options cache.
-	if ( isset( $options_cache[$setting][$key] ) ) {
+	if ( isset( $options_cache[ $setting ][ $key ] ) ) {
 		// Option has been cached.
-		return $options_cache[$setting][$key];
+		return $options_cache[ $setting ][ $key ];
 	}
 
 	// Check settings cache.
-	if ( isset( $settings_cache[$setting] ) ) {
+	if ( isset( $settings_cache[ $setting ] ) ) {
 		// Setting has been cached.
-		$options = apply_filters( 'genesis_options', $settings_cache[$setting], $setting );
+		$options = apply_filters( 'genesis_options', $settings_cache[ $setting ], $setting );
 	} else {
 		// Set value and cache setting.
-		$options = $settings_cache[$setting] = apply_filters( 'genesis_options', get_option( $setting ), $setting );
+		$settings_cache[ $setting ] = apply_filters( 'genesis_options', get_option( $setting ), $setting );
+		$options                    = $settings_cache[ $setting ];
 	}
 
 	// Check for non-existent option.
 	if ( ! is_array( $options ) || ! array_key_exists( $key, (array) $options ) ) {
 		// Cache non-existent option.
-		$options_cache[$setting][$key] = '';
+		$options_cache[ $setting ][ $key ] = '';
 	} else {
-		// Option has not been previously been cached, so cache now.
-		$options_cache[$setting][$key] = is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
+		// Option has not previously been cached, so cache now.
+		$options_cache[ $setting ][ $key ] = is_array( $options[ $key ] ) ? $options[ $key ] : wp_kses_decode_entities( $options[ $key ] );
 	}
 
-	return $options_cache[$setting][$key];
+	return $options_cache[ $setting ][ $key ];
 
 }
 
 /**
  * Echo options from the options database.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param string $setting   Optional. Settings field name. Eventually defaults to GENESIS_SETTINGS_FIELD.
@@ -98,6 +99,7 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
  */
 function genesis_option( $key, $setting = null, $use_cache = true ) {
 
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo genesis_get_option( $key, $setting, $use_cache );
 
 }
@@ -105,7 +107,7 @@ function genesis_option( $key, $setting = null, $use_cache = true ) {
 /**
  * Return SEO options from the SEO options database.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param bool   $use_cache Optional. Whether to use the Genesis cache value or not. Defaults to true.
@@ -121,7 +123,7 @@ function genesis_get_seo_option( $key, $use_cache = true ) {
 /**
  * Echo an SEO option from the SEO options database.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param bool   $use_cache Optional. Whether to use the Genesis cache value or not. Defaults to true.
@@ -162,6 +164,7 @@ function genesis_get_cpt_option( $key, $post_type_name = '', $use_cache = true )
  */
 function genesis_cpt_option( $key, $post_type_name, $use_cache = true ) {
 
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo genesis_get_cpt_option( $key, $post_type_name, $use_cache );
 
 }
@@ -173,7 +176,7 @@ function genesis_cpt_option( $key, $post_type_name, $use_cache = true ) {
  *
  * Pass in a `printf()` pattern as the second parameter and have that wrap around the value, if the value is not falsy.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $field          Custom field key.
  * @param string $output_pattern `printf()` compatible output pattern.
@@ -183,6 +186,7 @@ function genesis_custom_field( $field, $output_pattern = '%s', $post_id = null )
 
 	$value = genesis_get_custom_field( $field, $post_id );
 	if ( $value ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf( $output_pattern, $value );
 	}
 
@@ -193,7 +197,7 @@ function genesis_custom_field( $field, $output_pattern = '%s', $post_id = null )
  *
  * Return only the first value of custom field. Return empty string if field is blank or not set.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $field   Custom field key.
  * @param int    $post_id Optional. Post ID to use for Post Meta lookup, defaults to `get_the_ID()`.
@@ -214,8 +218,7 @@ function genesis_get_custom_field( $field, $post_id = null ) {
 		return '';
 	}
 
-	// Return custom field, slashes stripped, sanitized if string.
-	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
+	return is_array( $custom_field ) ? $custom_field : wp_kses_decode_entities( $custom_field );
 
 }
 
@@ -278,7 +281,7 @@ function genesis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 	}
 
 	// Cycle through $data, insert value or delete field.
-	foreach ( (array) $data as $field => $value ) {
+	foreach ( $data as $field => $value ) {
 		// Save $value, or delete if the $value is empty.
 		if ( $value ) {
 			update_post_meta( $post->ID, $field, $value );
@@ -287,6 +290,74 @@ function genesis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 		}
 	}
 
+}
+
+/**
+ * Get an expiring database setting.
+ *
+ * Checks the associate expiration timestamp before returning the setting value.
+ *
+ * If the setting has expired, delete the setting and expiration.
+ *
+ * @since 2.9.0
+ *
+ * @param string $setting The setting key.
+ * @param int    $current_time The current timestamp. `time()` if null.
+ * @return mixed The value of the setting, or false if setting is expired.
+ */
+function genesis_get_expiring_setting( $setting, $current_time = null ) {
+	if ( is_null( $current_time ) ) {
+		$current_time = time();
+	}
+
+	// Prefix the setting, so we're not messing with non-expiring settings.
+	$setting = 'genesis_expiring_setting_' . $setting;
+
+	if ( (int) $current_time >= (int) get_option( $setting . '_expiration' ) ) {
+		delete_option( $setting );
+		delete_option( $setting . '_expiration' );
+		return false;
+	}
+
+	return get_option( $setting );
+}
+
+/**
+ * Set an expiring database setting.
+ *
+ * Updates the value and expiration timestamp for an expiring setting.
+ *
+ * @since 2.9.0
+ *
+ * @param string $setting  The setting key.
+ * @param mixed  $value    The value to save.
+ * @param int    $duration The duration this setting should remain active.
+ * @return mixed The result of `update_option( $setting )`.
+ */
+function genesis_set_expiring_setting( $setting, $value, $duration ) {
+	// Prefix the setting, so we're not messing with non-expiring settings.
+	$setting = 'genesis_expiring_setting_' . $setting;
+
+	update_option( $setting . '_expiration', time() + $duration, false );
+	return update_option( $setting, $value, false );
+}
+
+/**
+ * Delete an expiring database setting.
+ *
+ * Deletes the database settings for both the $setting and the associated expiration timestamp.
+ *
+ * @since 2.9.0
+ *
+ * @param string $setting  The setting key.
+ * @return mixed The result of `delete_option( $setting )`.
+ */
+function genesis_delete_expiring_setting( $setting ) {
+	// Prefix the setting, so we're not messing with non-expiring settings.
+	$setting = 'genesis_expiring_setting_' . $setting;
+
+	delete_option( $setting . '_expiration' );
+	return delete_option( $setting );
 }
 
 /**
@@ -306,7 +377,7 @@ function genesis_update_settings( $new = '', $setting = GENESIS_SETTINGS_FIELD )
 
 	// Allow settings to be deleted.
 	foreach ( $settings as $key => $value ) {
-		if ( 'unset' == $value ) {
+		if ( 'unset' === $value ) {
 			unset( $settings[ $key ] );
 		}
 	}

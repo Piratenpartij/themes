@@ -7,8 +7,8 @@
  *
  * @package Genesis\Templates
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_before_loop', 'genesis_do_search_title' );
@@ -21,7 +21,7 @@ function genesis_do_search_title() {
 
 	$title = sprintf( '<div class="archive-description"><h1 class="archive-title">%s %s</h1></div>', apply_filters( 'genesis_search_title_text', __( 'Search Results for:', 'genesis' ) ), get_search_query() );
 
-	echo apply_filters( 'genesis_search_title_output', $title ) . "\n";
+	echo apply_filters( 'genesis_search_title_output', $title ) . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 }
 

@@ -7,8 +7,8 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -47,7 +47,12 @@ class Genesis_Admin_Meta_Boxes extends Genesis_Admin_Boxes {
 	 */
 	public function show_meta_box( $id, $object = null ) {
 
-		$this->do_meta_box( $object, array( 'id' => $id ) );
+		$this->do_meta_box(
+			$object,
+			[
+				'id' => $id,
+			]
+		);
 
 	}
 }

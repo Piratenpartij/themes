@@ -7,8 +7,8 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -16,7 +16,14 @@
 	<strong><?php esc_html_e( 'Please Activate a Genesis Child Theme:', 'genesis' ); ?></strong>
 	<?php
 	esc_html_e( 'We\'ve noticed you are using the Genesis Framework parent theme alone. We strongly recommend you run a Genesis child theme with it (we even have a free theme you can use). ', 'genesis' );
-	printf( esc_html__( 'For more information, see our article at %s', 'genesis' ), make_clickable( __( 'https://www.studiopress.com/genesis-always-use-child-theme/', 'genesis' ) )
-);
+	printf(
+		/* translators: %s: URL to studiopress.com. */
+		esc_html__( 'For more information, see our article at %s', 'genesis' ),
+		sprintf(
+			'<a href="%1$s">%2$s</a>',
+			esc_url( 'https://www.studiopress.com/genesis-always-use-child-theme/' ),
+			esc_html( 'https://www.studiopress.com/genesis-always-use-child-theme/' )
+		)
+	);
 	?>
 </p></div>

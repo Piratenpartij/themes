@@ -15,7 +15,6 @@ if (!function_exists('mh_magazine_lite_admin_notice')) {
 		}
 	}
 }
-add_action('admin_notices', 'mh_magazine_lite_admin_notice');
 
 /***** Hide Welcome Notice in WordPress Dashboard *****/
 
@@ -33,7 +32,6 @@ if (!function_exists('mh_magazine_lite_hide_notice')) {
 		}
 	}
 }
-add_action('wp_loaded', 'mh_magazine_lite_hide_notice');
 
 /***** Content of Welcome Notice in WordPress Dashboard *****/
 
@@ -66,7 +64,6 @@ if (!function_exists('mh_magazine_lite_theme_info_page')) {
 		add_theme_page(esc_html__('Welcome to MH Magazine lite', 'mh-magazine-lite'), esc_html__('Theme Info', 'mh-magazine-lite'), 'edit_theme_options', 'magazine', 'mh_magazine_lite_display_theme_page');
 	}
 }
-add_action('admin_menu', 'mh_magazine_lite_theme_info_page');
 
 if (!function_exists('mh_magazine_lite_display_theme_page')) {
 	function mh_magazine_lite_display_theme_page() {
@@ -323,6 +320,14 @@ if (!function_exists('mh_magazine_lite_display_theme_page')) {
 			</div>
 		</div><?php
 	}
+}
+
+/***** Add Welcome Notice and Admin Menu for Parent Theme and Official Child Themes *****/
+
+if (mh_magazine_lite_official_theme()) {
+	add_action('admin_notices', 'mh_magazine_lite_admin_notice');
+	add_action('wp_loaded', 'mh_magazine_lite_hide_notice');
+	add_action('admin_menu', 'mh_magazine_lite_theme_info_page');
 }
 
 ?>

@@ -7,8 +7,8 @@
  *
  * @package Genesis\Menus
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -47,7 +47,36 @@ function genesis_nav_menu_supported( $menu ) {
  */
 function genesis_superfish_enabled() {
 
-	return ( ! genesis_html5() && genesis_get_option( 'superfish' ) ) || genesis_a11y( 'drop-down-menu' ) || apply_filters( 'genesis_superfish_enabled', false );
+	// Superfish must be disabled if AMP is active.
+	if ( genesis_is_amp() ) {
+		return false;
+	}
+
+	return ( genesis_a11y( 'drop-down-menu' ) || apply_filters( 'genesis_superfish_enabled', false ) );
+
+}
+
+/**
+ * Register the theme's responsive menus' configuration settings.
+ *
+ * @since 3.0.0
+ *
+ * @param array $config Optional. Array of configuration parameters for the responsive menus.
+ *
+ * @return Genesis_Menu_Handler returns an instance of the handler.
+ */
+function genesis_register_responsive_menus( array $config = [] ) {
+
+	static $menu_handler = null;
+
+	if ( null === $menu_handler && ! empty( $config ) ) {
+
+		$menu_handler = new Genesis_Menu_Handler( get_stylesheet(), $config );
+		$menu_handler->add_hooks();
+
+	}
+
+	return $menu_handler;
 
 }
 
@@ -63,24 +92,31 @@ function genesis_superfish_enabled() {
  * @return string|null Navigation menu markup, or `null` if menu is not assigned to theme location, there is
  *                     no menu, or there are no menu items in the menu.
  */
-function genesis_get_nav_menu( $args = array() ) {
+function genesis_get_nav_menu( $args = [] ) {
 
-	$args = wp_parse_args( $args, array(
-		'theme_location' => '',
-		'container'      => '',
-		'menu_class'     => 'menu genesis-nav-menu',
-		'link_before'    => genesis_markup( array( 
+	$args = wp_parse_args(
+		$args,
+		[
+			'theme_location' => '',
+			'container'      => '',
+			'menu_class'     => 'menu genesis-nav-menu',
+			'link_before'    => genesis_markup(
+				[
 					'open'    => '<span %s>',
 					'context' => 'nav-link-wrap',
 					'echo'    => false,
-				) ),
-		'link_after'     => genesis_markup( array( 
+				]
+			),
+			'link_after'     => genesis_markup(
+				[
 					'close'   => '</span>',
 					'context' => 'nav-link-wrap',
 					'echo'    => false,
-				) ),
-		'echo'           => 0,
-	) );
+				]
+			),
+			'echo'           => 0,
+		]
+	);
 
 	// If a menu is not assigned to theme location, abort.
 	if ( ! has_nav_menu( $args['theme_location'] ) ) {
@@ -101,28 +137,31 @@ function genesis_get_nav_menu( $args = array() ) {
 		return null;
 	}
 
-	$nav_markup_open = genesis_structural_wrap( 'menu-' . $sanitized_location, 'open', 0 );
-	$nav_markup_close  = genesis_structural_wrap( 'menu-' . $sanitized_location, 'close', 0 );
-	$params = array(
+	$nav_markup_open  = genesis_get_structural_wrap( 'menu-' . $sanitized_location, 'open' );
+	$nav_markup_close = genesis_get_structural_wrap( 'menu-' . $sanitized_location, 'close' );
+
+	$params = [
 		'theme_location' => $args['theme_location'],
+	];
+
+	$nav_output = genesis_markup(
+		[
+			'open'    => '<nav %s>',
+			'close'   => '</nav>',
+			'context' => 'nav-' . $sanitized_location,
+			'content' => $nav_markup_open . $nav . $nav_markup_close,
+			'echo'    => false,
+			'params'  => $params,
+		]
 	);
 
-	$nav_output = genesis_markup( array(
-		'open'    => '<nav %s>',
-		'close'   => '</nav>',
-		'context' => 'nav-' . $sanitized_location,
-		'content' => $nav_markup_open . $nav . $nav_markup_close,
-		'echo'    => false,
-		'params'  => $params,
-	) );
-
-	$filter_location = 'genesis_' . $sanitized_location . '_nav';
+	$filter_location = $sanitized_location . '_nav';
 
 	// Handle back-compat for primary and secondary nav filters.
 	if ( 'primary' === $args['theme_location'] ) {
-		$filter_location = 'genesis_do_nav';
+		$filter_location = 'do_nav';
 	} elseif ( 'secondary' === $args['theme_location'] ) {
-		$filter_location = 'genesis_do_subnav';
+		$filter_location = 'do_subnav';
 	}
 
 	/**
@@ -141,7 +180,7 @@ function genesis_get_nav_menu( $args = array() ) {
 	 *     @type bool $echo 0 to indicate `wp_nav_menu()` should return not echo.
 	 * }
 	 */
-	return apply_filters( $filter_location, $nav_output, $nav, $args );
+	return apply_filters( "genesis_{$filter_location}", $nav_output, $nav, $args );
 }
 
 /**
@@ -149,8 +188,56 @@ function genesis_get_nav_menu( $args = array() ) {
  *
  * @since 2.1.0
  *
- * @param string $args Menu arguments.
+ * @param string|array $args Menu arguments.
  */
 function genesis_nav_menu( $args ) {
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output from wp_nav_menu(), with wrapping elements, and then all filterable.
 	echo genesis_get_nav_menu( $args );
+}
+
+/**
+ * Checks if the provided menu name is unique and returns a unique version.
+ *
+ * Useful during one-click theme setup to create menus with unique names based
+ * on a starting name.
+ *
+ * @since 3.1.0
+ *
+ * @param string $name The name to start with.
+ * @return string The original name if unique, or the name appended by a number
+ *                that makes it unique.
+ */
+function genesis_unique_menu_name( $name ) {
+	$menu_names = get_terms(
+		'nav_menu',
+		[
+			'fields'     => 'names',
+			'hide_empty' => false,
+		]
+	);
+
+	if ( ! is_array( $menu_names ) ) {
+		return $name;
+	}
+
+	// Names as keys to speed array search.
+	$menu_names = array_flip( $menu_names );
+
+	if ( ! isset( $menu_names[ $name ] ) ) {
+		return $name;
+	}
+
+	$i    = 2;
+	$stem = $name;
+
+	// Search for a unique name until one is found.
+	do {
+		$name = $stem . ' ' . $i;
+		if ( ! isset( $menu_names[ $name ] ) ) {
+			break;
+		}
+		$i++;
+	} while ( 1 );
+
+	return $name;
 }

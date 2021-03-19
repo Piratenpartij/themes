@@ -10,8 +10,8 @@
  *
  * @package Genesis\Compatibility
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 if ( ! function_exists( 'mb_strpos' ) ) {
@@ -54,22 +54,6 @@ if ( ! function_exists( 'mb_strrpos' ) ) {
 	}
 }
 
-if ( ! function_exists( 'mb_strlen' ) ) {
-	/**
-	 * Add compatibility for undefined mb_strlen() by deferring to strlen().
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $string   The string being checked for length.
-	 * @param string $encoding Optional. The encoding parameter is not used in `strlen()`. Default is an empty string.
-	 * @return int The number of characters in the string having character encoding `$encoding`.
-	 *             A multi-byte character is counted as 1. Returns false if the given encoding is invalid.
-	 */
-	function mb_strlen( $string, $encoding = '' ) {
-		return strlen( $string );
-	}
-}
-
 if ( ! function_exists( 'mb_strtolower' ) ) {
 	/**
 	 * Add compatibility for undefined mb_strtolower() by deferring to strtolower().
@@ -83,5 +67,26 @@ if ( ! function_exists( 'mb_strtolower' ) ) {
 	 */
 	function mb_strtolower( $string, $encoding = '' ) {
 		return strtolower( $string );
+	}
+}
+
+// Add compatibility for undefined wp_unique_id() by polyfilling; it was introduced in WP 5.0.3.
+if ( ! function_exists( 'wp_unique_id' ) ) {
+	/**
+	 * Get unique ID.
+	 *
+	 * This is a PHP implementation of Underscore's uniqueId method. A static variable
+	 * contains an integer that is incremented with each call. This number is returned
+	 * with the optional prefix. As such the returned value is not universally unique,
+	 * but it is unique across the life of the PHP process.
+	 *
+	 * @staticvar int $id_counter
+	 *
+	 * @param string $prefix Prefix for the returned ID.
+	 * @return string Unique ID.
+	 */
+	function wp_unique_id( $prefix = '' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- adding backwards compatibility.
+		static $id_counter = 0;
+		return $prefix . ( ++$id_counter );
 	}
 }

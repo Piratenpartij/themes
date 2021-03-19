@@ -5,7 +5,7 @@ Description: MH UrbanMag offers an appealing layout, several custom widgets and 
 Author: MH Themes
 Author URI: https://www.mhthemes.com/
 Template: mh-magazine-lite
-Version: 1.1.4
+Version: 1.1.5
 Tags: one-column, two-columns, left-sidebar, right-sidebar, flexible-header, custom-header, custom-menu, featured-images, full-width-template, theme-options, threaded-comments, translation-ready, rtl-language-support, blog, entertainment, news
 Text Domain: mh-urbanmag
 Domain Path: /languages/
@@ -76,7 +76,7 @@ a:hover { color: #90a859; }
 
 /***** Images / Video *****/
 
-.wp-caption-text { color: #fff; }
+.wp-caption-text, .wp-block-image figcaption, .wp-block-audio figcaption { color: #fff; }
 
 /***** Gallery *****/
 

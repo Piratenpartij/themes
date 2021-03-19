@@ -8,8 +8,8 @@
  *
  * @package  Genesis
  * @author   StudioPress
- * @license  GPL-2.0+
- * @link     http://my.studiopress.com/themes/genesis/
+ * @license  GPL-2.0-or-later
+ * @link     https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -19,4 +19,4 @@
  * the framework so it can use the framework
  * components immediately.
  */
-require_once( dirname( __FILE__ ) . '/lib/init.php' );
+require_once __DIR__ . '/lib/init.php';

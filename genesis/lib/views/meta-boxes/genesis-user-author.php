@@ -7,22 +7,22 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
-<h3><?php esc_html_e( 'Author Archive Settings', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'Author Archive Settings', 'genesis' ); ?></h2>
 <p><span class="description"><?php esc_html_e( 'These settings apply to this author\'s archive pages.', 'genesis' ); ?></span></p>
 <table class="form-table">
 	<tbody>
 		<tr>
-			<th scope="row"><label for="headline"><?php esc_html_e( 'Custom Archive Headline', 'genesis' ); ?></label></th>
+			<th scope="row"><label for="genesis-meta[headline]"><?php esc_html_e( 'Custom Archive Headline', 'genesis' ); ?></label></th>
 			<td>
 				<input name="genesis-meta[headline]" id="genesis-meta[headline]" type="text" value="<?php echo esc_attr( get_the_author_meta( 'headline', $object->ID ) ); ?>" class="regular-text" /><br />
 				<span class="description">
 				<?php
-					/* translators: Escaped H1 tag. */
+					/* translators: %s: Escaped h1 tag wrapped in code tags. */
 					printf( esc_html__( 'Will display in the %s tag at the top of the first page', 'genesis' ), genesis_code( '<h1>' ) );
 				?>
 				</span>
@@ -30,9 +30,9 @@
 		</tr>
 
 		<tr>
-			<th scope="row"><label for="intro_text"><?php esc_html_e( 'Custom Description Text', 'genesis' ); ?></label></th>
+			<th scope="row"><label for="genesis-meta[intro-text]"><?php esc_html_e( 'Custom Description Text', 'genesis' ); ?></label></th>
 			<td>
-				<textarea name="genesis-meta[intro_text]" id="intro_text" rows="5" cols="30"><?php echo esc_textarea( get_the_author_meta( 'intro_text', $object->ID ) ); ?></textarea><br />
+				<textarea name="genesis-meta[intro_text]" id="genesis-meta[intro-text]" rows="5" cols="30"><?php echo esc_textarea( get_the_author_meta( 'intro_text', $object->ID ) ); ?></textarea><br />
 				<span class="description"><?php esc_html_e( 'This text will be the first paragraph, and display on the first page', 'genesis' ); ?></span>
 			</td>
 		</tr>

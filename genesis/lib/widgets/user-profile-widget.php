@@ -7,14 +7,14 @@
  *
  * @package Genesis\Widgets
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
  * Genesis User Profile widget class.
  *
- * @since 0.1.8
+ * @since 1.0.0
  *
  * @package Genesis\Widgets
  */
@@ -32,9 +32,9 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$this->defaults = array(
+		$this->defaults = [
 			'title'          => '',
-			'alignment'	     => 'left',
+			'alignment'      => 'left',
 			'user'           => '',
 			'size'           => '45',
 			'author_info'    => '',
@@ -42,20 +42,20 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 			'page'           => '',
 			'page_link_text' => __( 'Read More', 'genesis' ) . '&#x02026;',
 			'posts_link'     => '',
-		);
+		];
 
-		$widget_ops = array(
+		$widget_ops = [
 			'classname'   => 'user-profile',
 			'description' => __( 'Displays user profile block with Gravatar', 'genesis' ),
-		);
+		];
 
-		$control_ops = array(
+		$control_ops = [
 			'id_base' => 'user-profile',
 			'width'   => 200,
 			'height'  => 250,
-		);
+		];
 
-		parent::__construct( 'user-profile', __( 'Genesis - User Profile', 'genesis' ), $widget_ops, $control_ops );
+		parent::__construct( 'user-profile', esc_html__( 'Genesis - User Profile', 'genesis' ), $widget_ops, $control_ops );
 
 	}
 
@@ -71,43 +71,46 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 		// Merge with defaults.
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $args['before_widget'];
 
-			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
-			}
+		if ( ! empty( $instance['title'] ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
+		}
 
-			$text = '';
+		$text = '';
 
-			if ( ! empty( $instance['alignment'] ) ) {
-				$text .= '<span class="align' . esc_attr( $instance['alignment'] ) . '">';
-			}
+		if ( ! empty( $instance['alignment'] ) ) {
+			$text .= '<span class="align' . esc_attr( $instance['alignment'] ) . '">';
+		}
 
-			$text .= get_avatar( $instance['user'], $instance['size'] );
+		$text .= get_avatar( $instance['user'], $instance['size'] );
 
-			if( ! empty( $instance['alignment'] ) ) {
-				$text .= '</span>';
-			}
+		if ( ! empty( $instance['alignment'] ) ) {
+			$text .= '</span>';
+		}
 
-			if ( 'text' === $instance['author_info'] ) {
-				$text .= $instance['bio_text']; // We run KSES on update.
-			} else {
-				$text .= get_the_author_meta( 'description', $instance['user'] );
-			}
+		if ( 'text' === $instance['author_info'] ) {
+			$text .= $instance['bio_text']; // We run KSES on update.
+		} else {
+			$text .= get_the_author_meta( 'description', $instance['user'] );
+		}
 
-			$text .= $instance['page'] ? sprintf( ' <a class="pagelink" href="%s">%s</a>', get_page_link( $instance['page'] ), $instance['page_link_text'] ) : '';
+		$text .= $instance['page'] ? sprintf( ' <a class="pagelink" href="%s">%s</a>', get_page_link( $instance['page'] ), $instance['page_link_text'] ) : '';
 
-			echo wpautop( $text );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wpautop( $text );
 
-			// If posts link option checked, add posts link to output.
-			$display_name = get_the_author_meta( 'display_name', $instance['user'] );
-			$user_name = ( ! empty ( $display_name ) && genesis_a11y( 'screen-reader-text' ) ) ? '<span class="screen-reader-text">' . $display_name. ': </span>' : '';
+		// If posts link option checked, add posts link to output.
+		$display_name = esc_html( get_the_author_meta( 'display_name', $instance['user'] ) );
+		$user_name    = ( ! empty( $display_name ) && genesis_a11y( 'screen-reader-text' ) ) ? '<span class="screen-reader-text">' . $display_name . ': </span>' : '';
 
-			if ( $instance['posts_link'] ) {
-				printf( '<div class="posts_link posts-link"><a href="%s">%s%s</a></div>', get_author_posts_url( $instance['user'] ), $user_name, __( 'View My Blog Posts', 'genesis' ) );
-			}
+		if ( $instance['posts_link'] ) {
+			printf( '<div class="posts_link posts-link"><a href="%s">%s%s</a></div>', esc_url( get_author_posts_url( $instance['user'] ) ), $user_name, esc_html__( 'View My Blog Posts', 'genesis' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $user_name escaped above
+		}
 
-		echo $args['after_widget'];
+		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to build the widget HTML.
 
 	}
 
@@ -124,9 +127,9 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		$new_instance['title']          = strip_tags( $new_instance['title'] );
+		$new_instance['title']          = wp_strip_all_tags( $new_instance['title'] );
 		$new_instance['bio_text']       = current_user_can( 'unfiltered_html' ) ? $new_instance['bio_text'] : genesis_formatting_kses( $new_instance['bio_text'] );
-		$new_instance['page_link_text'] = strip_tags( $new_instance['page_link_text'] );
+		$new_instance['page_link_text'] = wp_strip_all_tags( $new_instance['page_link_text'] );
 
 		return $new_instance;
 
@@ -145,61 +148,83 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title', 'genesis' ); ?>:</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title', 'genesis' ); ?>:</label>
 			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'user' ) ); ?>"><?php _e( 'Select a user. The email address for this account will be used to pull the Gravatar image.', 'genesis' ); ?></label><br />
-			<?php wp_dropdown_users( array( 'who' => 'authors', 'name' => $this->get_field_name( 'user' ), 'selected' => $instance['user'] ) ); ?>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'user' ) ); ?>"><?php esc_html_e( 'Select a user. The email address for this account will be used to pull the Gravatar image.', 'genesis' ); ?></label><br />
+			<?php
+			wp_dropdown_users(
+				[
+					'who'      => 'authors',
+					'name'     => $this->get_field_name( 'user' ),
+					'selected' => $instance['user'],
+				]
+			);
+			?>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'size' ) ); ?>"><?php _e( 'Gravatar Size', 'genesis' ); ?>:</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'size' ) ); ?>"><?php esc_html_e( 'Gravatar Size', 'genesis' ); ?>:</label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'size' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'size' ) ); ?>">
 				<?php
-				$sizes = array( __( 'Small', 'genesis' ) => 45, __( 'Medium', 'genesis' ) => 65, __( 'Large', 'genesis' ) => 85, __( 'Extra Large', 'genesis' ) => 125 );
+				$sizes = [
+					__( 'Small', 'genesis' )       => 45,
+					__( 'Medium', 'genesis' )      => 65,
+					__( 'Large', 'genesis' )       => 85,
+					__( 'Extra Large', 'genesis' ) => 125,
+				];
 				$sizes = apply_filters( 'genesis_gravatar_sizes', $sizes );
-				foreach ( (array) $sizes as $label => $size ) { ?>
-					<option value="<?php echo absint( $size ); ?>" <?php selected( $size, $instance['size'] ); ?>><?php printf( '%s (%spx)', $label, $size ); ?></option>
+				foreach ( (array) $sizes as $label => $size ) {
+					?>
+					<option value="<?php echo absint( $size ); ?>" <?php selected( $size, $instance['size'] ); ?>><?php printf( '%s (%spx)', esc_html( $label ), esc_html( $size ) ); ?></option>
 				<?php } ?>
 			</select>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'alignment' ) ); ?>"><?php _e( 'Gravatar Alignment', 'genesis' ); ?>:</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'alignment' ) ); ?>"><?php esc_html_e( 'Gravatar Alignment', 'genesis' ); ?>:</label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'alignment' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'alignment' ) ); ?>">
-				<option value="">- <?php _e( 'None', 'genesis' ); ?> -</option>
-				<option value="left" <?php selected( 'left', $instance['alignment'] ); ?>><?php _e( 'Left', 'genesis' ); ?></option>
-				<option value="right" <?php selected( 'right', $instance['alignment'] ); ?>><?php _e( 'Right', 'genesis' ); ?></option>
+				<option value="">- <?php esc_html_e( 'None', 'genesis' ); ?> -</option>
+				<option value="left" <?php selected( 'left', $instance['alignment'] ); ?>><?php esc_html_e( 'Left', 'genesis' ); ?></option>
+				<option value="right" <?php selected( 'right', $instance['alignment'] ); ?>><?php esc_html_e( 'Right', 'genesis' ); ?></option>
 			</select>
 		</p>
 
 		<fieldset>
-			<legend><?php _e( 'Select which text you would like to use as the author description', 'genesis' ); ?></legend>
+			<legend><?php esc_html_e( 'Select which text you would like to use as the author description', 'genesis' ); ?></legend>
 			<p>
 				<input type="radio" name="<?php echo esc_attr( $this->get_field_name( 'author_info' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'author_info' ) ); ?>_val1" value="bio" <?php checked( $instance['author_info'], 'bio' ); ?>/>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'author_info' ) ); ?>_val1"><?php _e( 'Author Bio', 'genesis' ); ?></label><br />
+				<label for="<?php echo esc_attr( $this->get_field_id( 'author_info' ) ); ?>_val1"><?php esc_html_e( 'Author Bio', 'genesis' ); ?></label><br />
 				<input type="radio" name="<?php echo esc_attr( $this->get_field_name( 'author_info' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'author_info' ) ); ?>_val2" value="text" <?php checked( $instance['author_info'], 'text' ); ?>/>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'author_info' ) ); ?>_val2"><?php _e( 'Custom Text (below)', 'genesis' ); ?></label><br />
-				<label for="<?php echo esc_attr( $this->get_field_id( 'bio_text' ) ); ?>" class="screen-reader-text"><?php _e( 'Custom Text Content', 'genesis' ); ?></label>
-				<textarea id="<?php echo esc_attr( $this->get_field_id( 'bio_text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'bio_text' ) ); ?>" class="widefat" rows="6" cols="4"><?php echo htmlspecialchars( $instance['bio_text'] ); ?></textarea>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'author_info' ) ); ?>_val2"><?php esc_html_e( 'Custom Text (below)', 'genesis' ); ?></label><br />
+				<label for="<?php echo esc_attr( $this->get_field_id( 'bio_text' ) ); ?>" class="screen-reader-text"><?php esc_html_e( 'Custom Text Content', 'genesis' ); ?></label>
+				<textarea id="<?php echo esc_attr( $this->get_field_id( 'bio_text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'bio_text' ) ); ?>" class="widefat" rows="6" cols="4"><?php echo esc_html( $instance['bio_text'] ); ?></textarea>
 			</p>
 		</fieldset>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'page' ) ); ?>"><?php _e( 'Choose your extended "About Me" page from the list below. This will be the page linked to at the end of the about me section.', 'genesis' ); ?></label><br />
-			<?php wp_dropdown_pages( array( 'name' => $this->get_field_name( 'page' ), 'show_option_none' => __( 'None', 'genesis' ), 'selected' => $instance['page'] ) ); ?>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'page' ) ); ?>"><?php esc_html_e( 'Choose your extended "About Me" page from the list below. This will be the page linked to at the end of the about me section.', 'genesis' ); ?></label><br />
+			<?php
+			wp_dropdown_pages(
+				[
+					'name'             => $this->get_field_name( 'page' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- False positive.
+					'show_option_none' => esc_html__( 'None', 'genesis' ), // WP core uses this value without further escaping, so we escape it here.
+					'selected'         => $instance['page'], // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- False positive.
+				]
+			);
+			?>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'page_link_text' ) ); ?>"><?php _e( 'Extended page link text', 'genesis' ); ?>:</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'page_link_text' ) ); ?>"><?php esc_html_e( 'Extended page link text', 'genesis' ); ?>:</label>
 			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'page_link_text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'page_link_text' ) ); ?>" value="<?php echo esc_attr( $instance['page_link_text'] ); ?>" class="widefat" />
 		</p>
 
 		<p>
 			<input id="<?php echo esc_attr( $this->get_field_id( 'posts_link' ) ); ?>" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'posts_link' ) ); ?>" value="1" <?php checked( $instance['posts_link'] ); ?>/>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'posts_link' ) ); ?>"><?php _e( 'Show Author Archive Link?', 'genesis' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'posts_link' ) ); ?>"><?php esc_html_e( 'Show Author Archive Link?', 'genesis' ); ?></label>
 		</p>
 		<?php
 

@@ -142,8 +142,8 @@ if (!function_exists('mh_magazine_lite_featured_image')) {
 			$thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(), 'mh-magazine-lite-content');
 			echo "\n" . '<figure class="entry-thumbnail">' . "\n";
 				echo '<img src="' . esc_url($thumbnail[0]) . '" alt="' . esc_attr(get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true)) . '" title="' . esc_attr(get_post(get_post_thumbnail_id())->post_title) . '" />' . "\n";
-				if (get_post(get_post_thumbnail_id())->post_excerpt) {
-					echo '<figcaption class="wp-caption-text">' . wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt) . '</figcaption>' . "\n";
+				if (get_the_post_thumbnail_caption()) {
+					echo '<figcaption class="wp-caption-text">' . wp_kses_post(get_the_post_thumbnail_caption()) . '</figcaption>' . "\n";
 				}
 			echo '</figure>' . "\n";
 		}
@@ -286,10 +286,12 @@ if (!function_exists('mh_magazine_lite_comment_fields')) {
 		$commenter = wp_get_current_commenter();
 		$req = get_option('require_name_email');
 		$aria_req = ($req ? " aria-required='true'" : '');
+		$consent = empty($commenter['comment_author_email']) ? '' : ' checked="checked"';
 		$fields =  array(
 			'author'	=>	'<p class="comment-form-author"><label for="author">' . esc_html__('Name ', 'mh-magazine-lite') . '</label>' . ($req ? '<span class="required">*</span>' : '') . '<br/><input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30"' . $aria_req . ' /></p>',
 			'email' 	=>	'<p class="comment-form-email"><label for="email">' . esc_html__('Email ', 'mh-magazine-lite') . '</label>' . ($req ? '<span class="required">*</span>' : '' ) . '<br/><input id="email" name="email" type="text" value="' . esc_attr($commenter['comment_author_email']) . '" size="30"' . $aria_req . ' /></p>',
-			'url' 		=>	'<p class="comment-form-url"><label for="url">' . esc_html__('Website', 'mh-magazine-lite') . '</label><br/><input id="url" name="url" type="text" value="' . esc_attr($commenter['comment_author_url']) . '" size="30" /></p>'
+			'url' 		=>	'<p class="comment-form-url"><label for="url">' . esc_html__('Website', 'mh-magazine-lite') . '</label><br/><input id="url" name="url" type="text" value="' . esc_attr($commenter['comment_author_url']) . '" size="30" /></p>',
+			'cookies' 	=>  '<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' />' . '<label for="wp-comment-cookies-consent">' . esc_html__('Save my name, email, and website in this browser for the next time I comment.', 'mh-magazine-lite') . '</label></p>'
 		);
 		return $fields;
 	}
@@ -325,7 +327,7 @@ if (!function_exists('mh_magazine_lite_pagination')) {
 if (!function_exists('mh_magazine_lite_paginated_posts')) {
 	function mh_magazine_lite_paginated_posts($content) {
 		if (is_singular() && in_the_loop()) {
-			$content .= wp_link_pages(array('before' => '<div class="pagination mh-clearfix">', 'after' => '</div>', 'link_before' => '<span class="pagelink">', 'link_after' => '</span>', 'nextpagelink' => __('&raquo;', 'mh-magazine-lite'), 'previouspagelink' => __('&laquo;', 'mh-magazine-lite'), 'pagelink' => '%', 'echo' => 0));
+			$content .= wp_link_pages(array('before' => '<div class="pagination clear mh-clearfix">', 'after' => '</div>', 'link_before' => '<span class="pagelink">', 'link_after' => '</span>', 'nextpagelink' => esc_html__('&raquo;', 'mh-magazine-lite'), 'previouspagelink' => esc_html__('&laquo;', 'mh-magazine-lite'), 'pagelink' => '%', 'echo' => 0));
 		}
 		return $content;
 	}

@@ -15,7 +15,7 @@ var pasfoto_source = new Image(),
     defaultpadding = 5,
     rotation = 0,
     basepath = '/',
-    overlay_images = new Array('purple_bar1.png','piratenpartij_nederland_logo_zwart2.png','piratenpartij_nederland_logo_zwart.png','piratenpartij_nederland_logo_wit.png','sleepwet.png');
+    overlay_images = new Array('purple_bar2.png', 'piratenpartij_nederland_logo_zwart2.png', 'piratenpartij_nederland_logo_zwart.png', 'piratenpartij_nederland_logo_wit.png', 'purple_saveyourinternet.png', 'transparantie-rond-tw.png', 'transparantie-onder-tw.png', 'stem-piraat-tw.png' );
 
 basepath = '/wp-content/themes/ppnl/pasfoto_generator/';
 //basepath = '';
@@ -201,7 +201,7 @@ function load_app() {
   div3.append('<table class="position"><tr><td id="lt"></td><td id="rt"></td></tr><tr><td id="lb"></td><td class="checked" id="rb"></td></tr></table>');
   div3.append(jQuery('<h2>').text('4. Sla op!'));
   var downloadLink = jQuery('<a>').addClass('download_button').attr({id:'dl', href:'#', target:'_blank'}).text('Piratenpartij pasfoto');
-  if ( ! /Android/i.test(navigator.userAgent) ) {
+  if ( ! /Android012345RareHack/i.test(navigator.userAgent) ) {
     downloadLink.attr({download:'Piratenpartij_pasfoto.png'});
   }
   div3.append(downloadLink);

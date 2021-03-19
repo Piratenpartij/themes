@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MH Magazine lite v2.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 08:53+0000\n"
-"PO-Revision-Date: 2017-06-01 08:53+0000\n"
+"POT-Creation-Date: 2018-05-18 06:46+0000\n"
+"PO-Revision-Date: 2018-05-18 06:48+0000\n"
 "Last-Translator: Michael <info@mhthemes.com>\n"
 "Language-Team: Hebrew\n"
-"Language: he-IL\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Loco - https://localise.biz/\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
 "__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
 "_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
@@ -24,9 +24,110 @@ msgstr ""
 "X-Loco-Target-Locale: he_IL"
 
 # @ mh-magazine-lite
+#: functions.php:53
+msgid "Main Navigation"
+msgstr "תפריט ראשי"
+
+# @ mh-magazine-lite
+#: functions.php:113 sidebar.php:8 sidebar.php:12
+msgid "Sidebar"
+msgstr "תפריט צד"
+
+# @ mh-magazine-lite
+#: functions.php:113
+msgid "Widget area (sidebar left/right) on single posts, pages and archives."
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:114
+#, php-format
+msgctxt "widget area name"
+msgid "Home %d - Full Width"
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:114 functions.php:115 functions.php:116 functions.php:117
+#: functions.php:118 functions.php:119
+msgid "Widget area on homepage."
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:115 functions.php:118
+#, php-format
+msgctxt "widget area name"
+msgid "Home %d - 2/3 Width"
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:116 functions.php:117 functions.php:119 homepage.php:19
+#: homepage.php:23 homepage.php:37 homepage.php:41 homepage.php:60
+#: homepage.php:64
+#, php-format
+msgctxt "widget area name"
+msgid "Home %d - 1/3 Width"
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:120 functions.php:121
+#, php-format
+msgctxt "widget area name"
+msgid "Posts %d - Advertisement"
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:120
+msgid "Widget area above single post content."
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:121
+msgid "Widget area below single post content."
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:122 functions.php:123 functions.php:124 functions.php:125
+#, php-format
+msgctxt "widget area name"
+msgid "Footer %d - 1/4 Width"
+msgstr ""
+
+# @ mh-magazine-lite
+#: functions.php:122 functions.php:123 functions.php:124 functions.php:125
+msgid "Widget area in footer."
+msgstr ""
+
+# @ mh-magazine-lite
+#: 404.php:7 includes/mh-compatibility.php:44
+msgid "Page not found (404)"
+msgstr "הדף שחיפשת לא נמצא"
+
+# @ mh-magazine-lite
+#: 404.php:12 content-none.php:14
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr "סליחה אבל לא הצלחנו למצוא את מה שחיפשת יכול להיות שהחיפוש יעזור"
+
+# @ mh-magazine-lite
+#: 404.php:16 content-none.php:19
+msgid "Search"
+msgstr "חיפוש"
+
+# @ mh-magazine-lite
 #: 404.php:22 content-none.php:25
 msgid "Recent Articles"
 msgstr ""
+
+#: content-none.php:4
+msgid "Nothing found"
+msgstr ""
+
+# @ mh-magazine-lite
+#: content-none.php:10
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with "
+"different keywords."
+msgstr "סליחה אבל לא הצלחנו למצוא שום דבר התואם לחיפוש שלך"
 
 #: comments.php:12
 #, php-format
@@ -34,6 +135,18 @@ msgid "%d Comment"
 msgid_plural "%d Comments"
 msgstr[0] ""
 msgstr[1] ""
+
+# @ mh-magazine-lite
+#: comments.php:22 includes/mh-custom-functions.php:317
+#: includes/mh-custom-functions.php:330
+msgid "&laquo;"
+msgstr "&laquo;"
+
+# @ mh-magazine-lite
+#: comments.php:22 includes/mh-custom-functions.php:318
+#: includes/mh-custom-functions.php:330
+msgid "&raquo;"
+msgstr "&raquo;"
 
 #: comments.php:30
 #, php-format
@@ -43,6 +156,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 # @ mh-magazine-lite
+#: comments.php:43
+msgid "Comments are closed."
+msgstr "התגובות סגורות."
+
+# @ mh-magazine-lite
 #: comments.php:50
 msgid "Be the first to comment"
 msgstr ""
@@ -50,6 +168,32 @@ msgstr ""
 # @ mh-magazine-lite
 #: comments.php:57
 msgid "Leave a Reply"
+msgstr ""
+
+# @ mh-magazine-lite
+#: comments.php:58
+msgid "Your email address will not be published."
+msgstr "כתובת האימייל שלך לא תפורסם"
+
+# @ mh-magazine-lite
+#: comments.php:60
+msgid "Comment"
+msgstr "תגובה"
+
+# @ mh-magazine-lite
+#: content-loop.php:8 content-large.php:8
+#: includes/widgets/mh-posts-focus.php:65
+#: includes/widgets/mh-posts-focus.php:93
+#: includes/widgets/mh-posts-stacked.php:60
+#: includes/widgets/mh-posts-stacked.php:90 includes/widgets/mh-slider.php:52
+#: includes/widgets/mh-slider.php:54 includes/widgets/mh-custom-posts.php:58
+msgid "No Image"
+msgstr ""
+
+# @ mh-magazine-lite
+#: search.php:8 includes/mh-compatibility.php:46
+#, php-format
+msgid "Search Results for %s"
 msgstr ""
 
 # @ mh-magazine-lite
@@ -73,81 +217,13 @@ msgstr[0] ""
 msgstr[1] ""
 
 # @ mh-magazine-lite
-#: content-large.php:8 includes/widgets/mh-custom-posts.php:58
-msgid "No Image"
-msgstr ""
-
-#: content-none.php:4
-msgid "Nothing found"
-msgstr ""
-
-# @ mh-magazine-lite
-#: footer.php:30
+#: footer.php:5
 #, php-format
 msgid "Copyright &copy; %1$s | WordPress Theme by %2$s"
 msgstr ""
 
-# @ mh-magazine-lite
-#: functions.php:117
-msgid "Widget area (sidebar left/right) on single posts, pages and archives."
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:118
-#, php-format
-msgctxt "widget area name"
-msgid "Home %d - Full Width"
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:118 functions.php:119 functions.php:120 functions.php:121
-#: functions.php:122 functions.php:123
-msgid "Widget area on homepage."
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:119 functions.php:122
-#, php-format
-msgctxt "widget area name"
-msgid "Home %d - 2/3 Width"
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:120 functions.php:121 functions.php:123 homepage.php:19
-#: homepage.php:23 homepage.php:37 homepage.php:41 homepage.php:60
-#: homepage.php:64
-#, php-format
-msgctxt "widget area name"
-msgid "Home %d - 1/3 Width"
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:124 functions.php:125
-#, php-format
-msgctxt "widget area name"
-msgid "Posts %d - Advertisement"
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:124
-msgid "Widget area above single post content."
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:125
-msgid "Widget area below single post content."
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:126 functions.php:127 functions.php:128 functions.php:129
-#, php-format
-msgctxt "widget area name"
-msgid "Footer %d - 1/4 Width"
-msgstr ""
-
-# @ mh-magazine-lite
-#: functions.php:126 functions.php:127 functions.php:128 functions.php:129
-msgid "Widget area in footer."
+#. Name of the template
+msgid "Full Width"
 msgstr ""
 
 #. Name of the template
@@ -166,14 +242,223 @@ msgstr ""
 msgid "Appearance &#8594; Widgets"
 msgstr ""
 
-# @ mh-magazine-lite
-#: search.php:8 includes/mh-compatibility.php:46
+#: includes/mh-custom-functions.php:91
 #, php-format
-msgid "Search Results for %s"
+msgid "Articles by %s"
 msgstr ""
 
-#. Name of the template
-msgid "Full Width"
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:186 includes/mh-custom-functions.php:191
+msgid "Back to article"
+msgstr ""
+
+#: includes/mh-custom-functions.php:188 includes/mh-custom-functions.php:195
+msgid "Previous"
+msgstr ""
+
+#: includes/mh-custom-functions.php:202 includes/mh-custom-functions.php:205
+msgid "Next"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:260
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s um %2$s"
+
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:266
+msgid "Your comment is awaiting moderation."
+msgstr "התגובה שלך מחכה לאישור מנהל"
+
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:273
+msgid "Edit"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:291
+msgid "Name "
+msgstr "שם"
+
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:292
+msgid "Email "
+msgstr "דואר אלקטרוני"
+
+# @ mh-magazine-lite
+#: includes/mh-custom-functions.php:293
+msgid "Website"
+msgstr "אתר"
+
+#: includes/mh-custom-functions.php:294
+msgid ""
+"Save my name, email, and website in this browser for the next time I comment."
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:13 admin/admin.php:147
+msgid "MH Magazine Pro"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:16 admin/admin.php:150
+msgid ""
+"If you like the free version of this theme, you will LOVE the full version "
+"of MH Magazine which includes unique custom widgets, additional features and "
+"more useful options to customize your website."
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:19
+msgid "Additional Features:"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:23
+msgid "Options to modify color scheme"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:26
+msgid "Typography options"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:29
+msgid "Several additional widget areas"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:32
+msgid "Additional custom widgets"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:35
+msgid "Extended layout options"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:38
+msgid "Additional custom menu slots"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:41
+msgid "Advanced advertising options"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:44
+msgid "Social buttons, related articles, ..."
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:47
+msgid "News ticker and many more..."
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:52 admin/admin.php:55 admin/admin.php:154
+#: admin/admin.php:311
+msgid "Upgrade to MH Magazine Pro"
+msgstr ""
+
+#: includes/mh-customizer.php:57 admin/admin.php:168
+msgid "Theme Demos"
+msgstr ""
+
+#: includes/mh-customizer.php:62 admin/admin.php:100 admin/admin.php:171
+msgid "MH Themes Showcase"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:67 admin/admin.php:114 admin/admin.php:121
+msgid "Theme Documentation"
+msgstr ""
+
+#: includes/mh-customizer.php:72 admin/admin.php:97 admin/admin.php:124
+#: admin/admin.php:303
+msgid "Support Forum"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:80 admin/admin.php:131 admin/admin.php:277
+msgid "Theme Options"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:84
+msgid "General"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:85
+msgid "Layout"
+msgstr ""
+
+#: includes/mh-customizer.php:86
+msgid "More Features &amp; Options"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:99
+msgid "Custom excerpt length in words"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:100
+msgid "Custom excerpt more text"
+msgstr "שורת הצג עוד בתפריט"
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:101
+msgid "Position of default sidebar"
+msgstr "מיקום של סרגל צד ברירת מחדל"
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:101 includes/mh-customizer.php:125
+msgid "Left"
+msgstr "שמאל"
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:101 includes/mh-customizer.php:126
+msgid "Right"
+msgstr "ימין"
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:102
+msgid "Author Box"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:102 includes/mh-customizer.php:103
+#: includes/mh-customizer.php:127
+msgid "Enable"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:102 includes/mh-customizer.php:103
+#: includes/mh-customizer.php:128
+msgid "Disable"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-customizer.php:103
+msgid "Post/Attachment Navigation"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-compatibility.php:26
+#, php-format
+msgctxt "post author"
+msgid "Articles by %s"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/mh-compatibility.php:38
+msgid "Archives"
 msgstr ""
 
 #: admin/admin.php:26
@@ -198,12 +483,6 @@ msgstr ""
 #: admin/admin.php:52 admin/admin.php:107
 #, php-format
 msgid "Get Started with %s"
-msgstr ""
-
-# @ mh-magazine-lite
-#: admin/admin.php:55 admin/admin.php:154 admin/admin.php:311
-#: includes/mh-customizer.php:52
-msgid "Upgrade to MH Magazine Pro"
 msgstr ""
 
 # @ mh-magazine-lite
@@ -241,20 +520,6 @@ msgstr ""
 msgid "Support Center"
 msgstr ""
 
-#: admin/admin.php:97 admin/admin.php:124 admin/admin.php:303
-#: includes/mh-customizer.php:72
-msgid "Support Forum"
-msgstr ""
-
-#: admin/admin.php:100 admin/admin.php:171 includes/mh-customizer.php:62
-msgid "MH Themes Showcase"
-msgstr ""
-
-# @ mh-magazine-lite
-#: admin/admin.php:114 admin/admin.php:121 includes/mh-customizer.php:67
-msgid "Theme Documentation"
-msgstr ""
-
 # @ mh-magazine-lite
 #: admin/admin.php:117
 #, php-format
@@ -263,11 +528,6 @@ msgid ""
 "all theme related information that is needed to get your site up and running "
 "in no time. In case you have any additional questions, feel free to reach "
 "out in the theme support forums on WordPress.org."
-msgstr ""
-
-# @ mh-magazine-lite
-#: admin/admin.php:131 admin/admin.php:277 includes/mh-customizer.php:80
-msgid "Theme Options"
 msgstr ""
 
 # @ mh-magazine-lite
@@ -283,19 +543,6 @@ msgstr ""
 msgid "Customize Theme"
 msgstr ""
 
-# @ mh-magazine-lite
-#: admin/admin.php:147 includes/mh-customizer.php:13
-msgid "MH Magazine Pro"
-msgstr ""
-
-# @ mh-magazine-lite
-#: admin/admin.php:150 includes/mh-customizer.php:16
-msgid ""
-"If you like the free version of this theme, you will LOVE the full version "
-"of MH Magazine which includes unique custom widgets, additional features and "
-"more useful options to customize your website."
-msgstr ""
-
 #: admin/admin.php:161
 msgid "MH Magazine Theme Demos"
 msgstr ""
@@ -305,10 +552,6 @@ msgid ""
 "The premium version of MH Magazine includes lots of additional features and "
 "options to customize your website. We have created several theme demos as "
 "examples in order to show what is possible with this flexible magazine theme."
-msgstr ""
-
-#: admin/admin.php:168 includes/mh-customizer.php:57
-msgid "Theme Demos"
 msgstr ""
 
 #: admin/admin.php:181
@@ -471,185 +714,6 @@ msgid "Rate this theme"
 msgstr ""
 
 # @ mh-magazine-lite
-#: includes/mh-compatibility.php:26
-#, php-format
-msgctxt "post author"
-msgid "Articles by %s"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-compatibility.php:38
-msgid "Archives"
-msgstr ""
-
-#: includes/mh-custom-functions.php:91
-#, php-format
-msgid "Articles by %s"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:186 includes/mh-custom-functions.php:191
-msgid "Back to article"
-msgstr ""
-
-#: includes/mh-custom-functions.php:188 includes/mh-custom-functions.php:195
-msgid "Previous"
-msgstr ""
-
-#: includes/mh-custom-functions.php:202 includes/mh-custom-functions.php:205
-msgid "Next"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:273
-msgid "Edit"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:19
-msgid "Additional Features:"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:23
-msgid "Options to modify color scheme"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:26
-msgid "Typography options"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:29
-msgid "Several additional widget areas"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:32
-msgid "Additional custom widgets"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:35
-msgid "Extended layout options"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:38
-msgid "Additional custom menu slots"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:41
-msgid "Advanced advertising options"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:44
-msgid "Social buttons, related articles, ..."
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:47
-msgid "News ticker and many more..."
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:84
-msgid "General"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:85
-msgid "Layout"
-msgstr ""
-
-#: includes/mh-customizer.php:86
-msgid "More Features &amp; Options"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:99
-msgid "Custom excerpt length in words"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:102
-msgid "Author Box"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:102 includes/mh-customizer.php:103
-#: includes/mh-customizer.php:127
-msgid "Enable"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:102 includes/mh-customizer.php:103
-#: includes/mh-customizer.php:128
-msgid "Disable"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:103
-msgid "Post/Attachment Navigation"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:8
-msgctxt "widget name"
-msgid "MH Custom Posts [lite]"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:11
-msgid "Custom Posts Widget to display posts based on categories or tags."
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:124
-#: includes/widgets/mh-posts-focus.php:165
-#: includes/widgets/mh-posts-large.php:95
-#: includes/widgets/mh-posts-stacked.php:154 includes/widgets/mh-slider.php:122
-msgid "Select a category to display posts from."
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:131
-#: includes/widgets/mh-posts-large.php:102 includes/widgets/mh-slider.php:129
-msgid "Post Count (max. 50):"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:135
-#: includes/widgets/mh-posts-focus.php:172
-#: includes/widgets/mh-posts-large.php:106
-#: includes/widgets/mh-posts-stacked.php:161 includes/widgets/mh-slider.php:133
-msgid "Skip Posts (max. 50):"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:143
-#: includes/widgets/mh-posts-focus.php:176
-#: includes/widgets/mh-posts-large.php:110
-#: includes/widgets/mh-posts-stacked.php:165 includes/widgets/mh-slider.php:148
-#: includes/widgets/mh-tabbed.php:97
-msgid "Info:"
-msgstr ""
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:143
-#: includes/widgets/mh-posts-focus.php:176
-#: includes/widgets/mh-posts-large.php:110
-#: includes/widgets/mh-posts-stacked.php:165 includes/widgets/mh-slider.php:148
-#: includes/widgets/mh-tabbed.php:97
-msgid ""
-"This is the lite version of this widget with basic features. More features "
-"and options are available in the premium version of MH Magazine."
-msgstr ""
-
-# @ mh-magazine-lite
 #: includes/widgets/mh-posts-focus.php:8
 msgctxt "widget name"
 msgid "MH Posts Focus [lite]"
@@ -663,25 +727,69 @@ msgid ""
 msgstr ""
 
 # @ mh-magazine-lite
-#: includes/widgets/mh-posts-focus.php:65
-#: includes/widgets/mh-posts-focus.php:93
-#: includes/widgets/mh-posts-stacked.php:60
-#: includes/widgets/mh-posts-stacked.php:90 includes/widgets/mh-slider.php:52
-#: includes/widgets/mh-slider.php:54
-msgid "No Picture"
+#: includes/widgets/mh-posts-focus.php:153
+#: includes/widgets/mh-posts-stacked.php:142
+#: includes/widgets/mh-custom-posts.php:112 includes/widgets/mh-tabbed.php:93
+#: includes/widgets/mh-posts-large.php:83
+msgid "Title:"
+msgstr "כותרת:"
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-focus.php:157
+#: includes/widgets/mh-posts-stacked.php:146 includes/widgets/mh-slider.php:114
+#: includes/widgets/mh-custom-posts.php:116
+#: includes/widgets/mh-posts-large.php:87
+msgid "Select a Category:"
+msgstr "תבחר קטגוריה"
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-focus.php:159
+#: includes/widgets/mh-posts-stacked.php:148 includes/widgets/mh-slider.php:116
+#: includes/widgets/mh-custom-posts.php:118
+#: includes/widgets/mh-posts-large.php:89
+msgid "All"
+msgstr "הכל"
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-focus.php:165
+#: includes/widgets/mh-posts-stacked.php:154 includes/widgets/mh-slider.php:122
+#: includes/widgets/mh-custom-posts.php:124
+#: includes/widgets/mh-posts-large.php:95
+msgid "Select a category to display posts from."
 msgstr ""
 
 # @ mh-magazine-lite
-#: includes/widgets/mh-posts-large.php:8
-msgctxt "widget name"
-msgid "MH Posts Large [lite]"
+#: includes/widgets/mh-posts-focus.php:168
+#: includes/widgets/mh-posts-stacked.php:157 includes/widgets/mh-slider.php:125
+#: includes/widgets/mh-custom-posts.php:127
+#: includes/widgets/mh-posts-large.php:98
+msgid "Filter Posts by Tags (e.g. lifestyle):"
+msgstr "סנן מודעות לפי טגיות:"
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-focus.php:172
+#: includes/widgets/mh-posts-stacked.php:161 includes/widgets/mh-slider.php:133
+#: includes/widgets/mh-custom-posts.php:135
+#: includes/widgets/mh-posts-large.php:106
+msgid "Skip Posts (max. 50):"
 msgstr ""
 
 # @ mh-magazine-lite
-#: includes/widgets/mh-posts-large.php:11
+#: includes/widgets/mh-posts-focus.php:176
+#: includes/widgets/mh-posts-stacked.php:165 includes/widgets/mh-slider.php:148
+#: includes/widgets/mh-custom-posts.php:143 includes/widgets/mh-tabbed.php:97
+#: includes/widgets/mh-posts-large.php:110
+msgid "Info:"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-focus.php:176
+#: includes/widgets/mh-posts-stacked.php:165 includes/widgets/mh-slider.php:148
+#: includes/widgets/mh-custom-posts.php:143 includes/widgets/mh-tabbed.php:97
+#: includes/widgets/mh-posts-large.php:110
 msgid ""
-"MH Posts Large widget to display posts (large-sized) including thumbnail "
-"images."
+"This is the lite version of this widget with basic features. More features "
+"and options are available in the premium version of MH Magazine."
 msgstr ""
 
 # @ mh-magazine-lite
@@ -709,6 +817,12 @@ msgid "Slider widget for use on homepage template."
 msgstr ""
 
 # @ mh-magazine-lite
+#: includes/widgets/mh-slider.php:129 includes/widgets/mh-custom-posts.php:131
+#: includes/widgets/mh-posts-large.php:102
+msgid "Post Count (max. 50):"
+msgstr ""
+
+# @ mh-magazine-lite
 #: includes/widgets/mh-slider.php:137
 msgid "Image size:"
 msgstr ""
@@ -721,6 +835,22 @@ msgstr ""
 # @ mh-magazine-lite
 #: includes/widgets/mh-slider.php:140
 msgid "Large"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-slider.php:145 includes/widgets/mh-custom-posts.php:140
+msgid "Ignore Sticky Posts"
+msgstr "התעלם ממודעות דביקות"
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-custom-posts.php:8
+msgctxt "widget name"
+msgid "MH Custom Posts [lite]"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-custom-posts.php:11
+msgid "Custom Posts Widget to display posts based on categories or tags."
 msgstr ""
 
 # @ mh-magazine-lite
@@ -737,6 +867,19 @@ msgstr ""
 # @ mh-magazine-lite
 #: includes/widgets/mh-tabbed.php:76
 msgid "No comments found"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-large.php:8
+msgctxt "widget name"
+msgid "MH Posts Large [lite]"
+msgstr ""
+
+# @ mh-magazine-lite
+#: includes/widgets/mh-posts-large.php:11
+msgid ""
+"MH Posts Large widget to display posts (large-sized) including thumbnail "
+"images."
 msgstr ""
 
 #. Description of the theme
@@ -764,147 +907,3 @@ msgstr ""
 #. Author URI of the theme
 msgid "https://www.mhthemes.com/"
 msgstr ""
-
-# @ mh-magazine-lite
-#: 404.php:7 includes/mh-compatibility.php:44
-msgid "Page not found (404)"
-msgstr "הדף שחיפשת לא נמצא"
-
-# @ mh-magazine-lite
-#: 404.php:12 content-none.php:14
-msgid ""
-"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
-"searching can help."
-msgstr "סליחה אבל לא הצלחנו למצוא את מה שחיפשת יכול להיות שהחיפוש יעזור"
-
-# @ mh-magazine-lite
-#: 404.php:16 content-none.php:19
-msgid "Search"
-msgstr "חיפוש"
-
-# @ mh-magazine-lite
-#: comments.php:22 includes/mh-custom-functions.php:315
-#: includes/mh-custom-functions.php:328
-msgid "&laquo;"
-msgstr "&laquo;"
-
-# @ mh-magazine-lite
-#: comments.php:22 includes/mh-custom-functions.php:316
-#: includes/mh-custom-functions.php:328
-msgid "&raquo;"
-msgstr "&raquo;"
-
-# @ mh-magazine-lite
-#: comments.php:43
-msgid "Comments are closed."
-msgstr "התגובות סגורות."
-
-# @ mh-magazine-lite
-#: comments.php:58
-msgid "Your email address will not be published."
-msgstr "כתובת האימייל שלך לא תפורסם"
-
-# @ mh-magazine-lite
-#: comments.php:60
-msgid "Comment"
-msgstr "תגובה"
-
-# @ mh-magazine-lite
-#: content-none.php:10
-msgid ""
-"Sorry, but nothing matched your search terms. Please try again with "
-"different keywords."
-msgstr "סליחה אבל לא הצלחנו למצוא שום דבר התואם לחיפוש שלך"
-
-# @ mh-magazine-lite
-#: functions.php:57
-msgid "Main Navigation"
-msgstr "תפריט ראשי"
-
-# @ mh-magazine-lite
-#: functions.php:117 sidebar.php:8 sidebar.php:12
-msgid "Sidebar"
-msgstr "תפריט צד"
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:260
-#, php-format
-msgid "%1$s at %2$s"
-msgstr "%1$s um %2$s"
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:266
-msgid "Your comment is awaiting moderation."
-msgstr "התגובה שלך מחכה לאישור מנהל"
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:290
-msgid "Name "
-msgstr "שם"
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:291
-msgid "Email "
-msgstr "דואר אלקטרוני"
-
-# @ mh-magazine-lite
-#: includes/mh-custom-functions.php:292
-msgid "Website"
-msgstr "אתר"
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:100
-msgid "Custom excerpt more text"
-msgstr "שורת הצג עוד בתפריט"
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:101
-msgid "Position of default sidebar"
-msgstr "מיקום של סרגל צד ברירת מחדל"
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:101 includes/mh-customizer.php:125
-msgid "Left"
-msgstr "שמאל"
-
-# @ mh-magazine-lite
-#: includes/mh-customizer.php:101 includes/mh-customizer.php:126
-msgid "Right"
-msgstr "ימין"
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:112
-#: includes/widgets/mh-posts-focus.php:153
-#: includes/widgets/mh-posts-large.php:83
-#: includes/widgets/mh-posts-stacked.php:142 includes/widgets/mh-tabbed.php:93
-msgid "Title:"
-msgstr "כותרת:"
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:116
-#: includes/widgets/mh-posts-focus.php:157
-#: includes/widgets/mh-posts-large.php:87
-#: includes/widgets/mh-posts-stacked.php:146 includes/widgets/mh-slider.php:114
-msgid "Select a Category:"
-msgstr "תבחר קטגוריה"
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:118
-#: includes/widgets/mh-posts-focus.php:159
-#: includes/widgets/mh-posts-large.php:89
-#: includes/widgets/mh-posts-stacked.php:148 includes/widgets/mh-slider.php:116
-msgid "All"
-msgstr "הכל"
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:127
-#: includes/widgets/mh-posts-focus.php:168
-#: includes/widgets/mh-posts-large.php:98
-#: includes/widgets/mh-posts-stacked.php:157 includes/widgets/mh-slider.php:125
-msgid "Filter Posts by Tags (e.g. lifestyle):"
-msgstr "סנן מודעות לפי טגיות:"
-
-# @ mh-magazine-lite
-#: includes/widgets/mh-custom-posts.php:140 includes/widgets/mh-slider.php:145
-msgid "Ignore Sticky Posts"
-msgstr "התעלם ממודעות דביקות"

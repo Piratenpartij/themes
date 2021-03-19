@@ -7,21 +7,22 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
  * Handle for Genesis_Admin_Meta_Boxes class.
  *
  * @since 2.5.0
+ *
+ * @return Genesis_Admin_Meta_Boxes Instance of class for registering meta boxes added to WordPress admin screens.
  */
 function genesis_meta_boxes() {
 
 	static $meta_boxes = null;
 
 	if ( null === $meta_boxes ) {
-		require_once( PARENT_DIR . '/lib/classes/class-genesis-admin-meta-boxes.php' );
 		$meta_boxes = new Genesis_Admin_Meta_Boxes();
 	}
 

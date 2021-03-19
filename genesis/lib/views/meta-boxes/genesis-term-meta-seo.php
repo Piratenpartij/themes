@@ -7,18 +7,19 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @license GPL-2.0-or-later
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
-<h3><?php esc_html_e( 'Theme SEO Settings', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'Theme SEO Settings', 'genesis' ); ?></h2>
 <table class="form-table">
 	<tbody>
 		<tr class="form-field">
 			<th scope="row"><label for="genesis-meta[doctitle]"><?php esc_html_e( 'Custom Document Title', 'genesis' ); ?></label></th>
 			<td>
 				<input name="genesis-meta[doctitle]" id="genesis-meta[doctitle]" type="text" value="<?php echo esc_attr( get_term_meta( $object->term_id, 'doctitle', true ) ); ?>" size="40" />
+				<p class="description"><?php esc_html_e( 'The Custom Document Title sets the page title as seen in browsers and search engines. ', 'genesis' ); ?></p>
 			</td>
 		</tr>
 
@@ -26,6 +27,7 @@
 			<th scope="row"><label for="genesis-meta[description]"><?php esc_html_e( 'Meta Description', 'genesis' ); ?></label></th>
 			<td>
 				<textarea name="genesis-meta[description]" id="genesis-meta[description]" rows="5" cols="50" class="large-text"><?php echo esc_html( get_term_meta( $object->term_id, 'description', true ) ); ?></textarea>
+				<p class="description"><?php esc_html_e( 'Text entered in the Meta Description field is used as the short page description under the title on search engine results pages.', 'genesis' ); ?></p>
 			</td>
 		</tr>
 
@@ -33,30 +35,32 @@
 			<th scope="row"><label for="genesis-meta[keywords]"><?php esc_html_e( 'Meta Keywords', 'genesis' ); ?></label></th>
 			<td>
 				<input name="genesis-meta[keywords]" id="genesis-meta[keywords]" type="text" value="<?php echo esc_attr( get_term_meta( $object->term_id, 'keywords', true ) ); ?>" size="40" />
-				<p class="description"><?php esc_html_e( 'Comma separated list', 'genesis' ); ?></p>
+				<p class="description"><?php esc_html_e( 'A comma-separated list of keywords relevant to the page can be entered in the Meta Keywords field. Keywords are generally ignored by Search Engines.', 'genesis' ); ?></p>
 			</td>
 		</tr>
 
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Robots Meta', 'genesis' ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Robots Meta', 'genesis' ); ?>
+				<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+			</th>
 			<td>
 				<label for="genesis-meta[noindex]"><input name="genesis-meta[noindex]" id="genesis-meta[noindex]" type="checkbox" value="1" <?php checked( get_term_meta( $object->term_id, 'noindex', true ) ); ?> />
 				<?php
-					/* translators: Meta noindex attribute. */
+					/* translators: %s: robots meta content attribute value, such as 'noindex', 'nofollow' or 'noarchive'. */
 					printf( esc_html__( 'Apply %s to this archive?', 'genesis' ), genesis_code( 'noindex' ) );
 				?>
 				</label><br />
 
 				<label for="genesis-meta[nofollow]"><input name="genesis-meta[nofollow]" id="genesis-meta[nofollow]" type="checkbox" value="1" <?php checked( get_term_meta( $object->term_id, 'nofollow', true ) ); ?> />
 				<?php
-					/* translators: Meta nofollow attribute. */
+					/* translators: %s: robots meta content attribute value, such as 'noindex', 'nofollow' or 'noarchive'. */
 					printf( esc_html__( 'Apply %s to this archive?', 'genesis' ), genesis_code( 'nofollow' ) );
 				?>
 				</label><br />
 
 				<label for="genesis-meta[noarchive]"><input name="genesis-meta[noarchive]" id="genesis-meta[noarchive]" type="checkbox" value="1" <?php checked( get_term_meta( $object->term_id, 'noarchive', true ) ); ?> />
 				<?php
-					/* translators: Meta noarchive attribute. */
+					/* translators: %s: robots meta content attribute value, such as 'noindex', 'nofollow' or 'noarchive'. */
 					printf( esc_html__( 'Apply %s to this archive?', 'genesis' ), genesis_code( 'noarchive' ) );
 				?>
 				</label>
